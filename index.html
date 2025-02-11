@@ -20,6 +20,20 @@
     a {
       text-decoration: none;
     }
+    /* Кнопка переключения языка */
+    #lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #007aff;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 100;
+      font-size: 1rem;
+    }
     /* Секция хедера */
     header {
       background: url('https://source.unsplash.com/1600x900/?technology') no-repeat center center/cover;
@@ -39,17 +53,6 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
       z-index: 1;
-    }
-    /* Логотип в левом верхнем углу */
-    .logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 2;
-    }
-    .logo img {
-      width: 80px;
-      height: auto;
     }
     .hero-content {
       position: relative;
@@ -142,88 +145,155 @@
   </style>
 </head>
 <body>
-  <!-- Хедер с логотипом и приветствием -->
+  <!-- Кнопка переключения языка -->
+  <button id="lang-toggle" data-lang="ru">EN</button>
+
+  <!-- Хедер с приветствием -->
   <header id="home">
-    <div class="logo">
-      <img src="https://i.pinimg.com/1200x/14/d4/4d/14d44d2658b23272d002bbd675331106.jpg" alt="Логотип">
-    </div>
     <div class="hero-content">
-      <h1>Джо Хакер</h1>
-      <p>Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
-      <div class="contact-buttons">
+      <!-- Русская версия -->
+      <h1 class="lang-ru">Джо Хакер</h1>
+      <p class="lang-ru">Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
+      <div class="contact-buttons lang-ru">
         <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
         <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
       </div>
+      <!-- Английская версия (скрыта по умолчанию) -->
+      <h1 class="lang-en" style="display:none;">Joe Hacker</h1>
+      <p class="lang-en" style="display:none;">Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.</p>
+      <div class="contact-buttons lang-en" style="display:none;">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
+        <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
+      </div>
     </div>
   </header>
 
-  <!-- Секция "Обо мне" -->
+  <!-- Секция "Обо мне" / "About Me" -->
   <section id="about">
-    <h2 class="section-title">Обо мне</h2>
-    <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <!-- Русская версия -->
+    <h2 class="section-title lang-ru">Обо мне</h2>
+    <p class="lang-ru" style="text-align: center; max-width: 800px; margin: 0 auto;">
       Меня зовут Джо Хакер, и я профессионал в области разработки телеграм-ботов, программирования на Python, создания скриптов, а также работы с HTML и JavaScript.
+    </p>
+    <!-- Английская версия -->
+    <h2 class="section-title lang-en" style="display:none;">About Me</h2>
+    <p class="lang-en" style="display:none; text-align: center; max-width: 800px; margin: 0 auto;">
+      My name is Joe Hacker, and I am a professional developer specializing in creating Telegram bots, programming in Python, writing scripts, and working with HTML and JavaScript.
     </p>
   </section>
 
-  <!-- Секция "Навыки и Компетенции" -->
+  <!-- Секция "Навыки и Компетенции" / "Skills and Expertise" -->
   <section id="skills">
-    <h2 class="section-title">Навыки и Компетенции</h2>
+    <!-- Русская версия -->
+    <h2 class="section-title lang-ru">Навыки и Компетенции</h2>
+    <!-- Английская версия -->
+    <h2 class="section-title lang-en" style="display:none;">Skills and Expertise</h2>
     <div class="skills">
       <div class="skill">
-        <h3>Разработка Телеграм-ботов</h3>
-        <p>
+        <!-- Русская версия -->
+        <h3 class="lang-ru">Разработка Телеграм-ботов</h3>
+        <p class="lang-ru">
           Опыт создания и внедрения телеграм-ботов для различных целей – от автоматизации и поддержки клиентов до маркетинга и развлечений. Использование API Telegram и библиотек Python, таких как telebot. Интеграция ботов с веб-сервисами и базами данных.
         </p>
+        <!-- Английская версия -->
+        <h3 class="lang-en" style="display:none;">Telegram Bot Development</h3>
+        <p class="lang-en" style="display:none;">
+          Experience in creating and implementing Telegram bots for various purposes – from automation and customer support to marketing and entertainment. Utilizing Telegram API and Python libraries such as telebot. Integration of bots with web services and databases.
+        </p>
       </div>
       <div class="skill">
-        <h3>Программирование на Python</h3>
-        <p>
+        <!-- Русская версия -->
+        <h3 class="lang-ru">Программирование на Python</h3>
+        <p class="lang-ru">
           Глубокие знания языка Python и его применения в веб-разработке, анализе данных и автоматизации. Чистый и эффективный код с использованием принципов ООП. Опыт работы с фреймворками Django и Flask.
         </p>
-      </div>
-      <div class="skill">
-        <h3>Создание Скриптов</h3>
-        <p>
-          Разработка скриптов для автоматизации рутинных задач и повышения эффективности рабочих процессов. Опыт работы с системами контроля версий, такими как Git.
+        <!-- Английская версия -->
+        <h3 class="lang-en" style="display:none;">Python Programming</h3>
+        <p class="lang-en" style="display:none;">
+          In-depth knowledge of Python and its application in web development, data analysis, and automation. Clean and efficient code using OOP principles. Experience with Django and Flask frameworks.
         </p>
       </div>
       <div class="skill">
-        <h3>Работа с HTML и JavaScript</h3>
-        <p>
+        <!-- Русская версия -->
+        <h3 class="lang-ru">Создание Скриптов</h3>
+        <p class="lang-ru">
+          Разработка скриптов для автоматизации рутинных задач и повышения эффективности рабочих процессов. Опыт работы с системами контроля версий, такими как Git.
+        </p>
+        <!-- Английская версия -->
+        <h3 class="lang-en" style="display:none;">Script Development</h3>
+        <p class="lang-en" style="display:none;">
+          Development of scripts for automating routine tasks and enhancing workflow efficiency. Experience with version control systems such as Git.
+        </p>
+      </div>
+      <div class="skill">
+        <!-- Русская версия -->
+        <h3 class="lang-ru">Работа с HTML и JavaScript</h3>
+        <p class="lang-ru">
           Создание современных и адаптивных веб-страниц с использованием HTML5, CSS3 и JavaScript. Интеграция фронтенда с бэкендом для создания полноценных веб-приложений.
+        </p>
+        <!-- Английская версия -->
+        <h3 class="lang-en" style="display:none;">HTML & JavaScript Development</h3>
+        <p class="lang-en" style="display:none;">
+          Creating modern and responsive web pages using HTML5, CSS3, and JavaScript. Integrating frontend with backend to develop complete web applications.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Секция контактов -->
+  <!-- Секция контактов / "Contact" -->
   <section id="contact">
-    <h2 class="section-title">Контакты</h2>
+    <!-- Русская версия -->
+    <h2 class="section-title lang-ru">Контакты</h2>
+    <!-- Английская версия -->
+    <h2 class="section-title lang-en" style="display:none;">Contact</h2>
     <div class="contact-buttons">
-      <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
-      <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
-      <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
-      <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
+      <div class="lang-ru">
+        <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
+        <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
+      </div>
+      <div class="lang-en" style="display:none;">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
+        <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Джо Хакер. Все права защищены.</p>
+    <!-- Русская версия -->
+    <p class="lang-ru">&copy; 2025 Джо Хакер. Все права защищены.</p>
+    <!-- Английская версия -->
+    <p class="lang-en" style="display:none;">&copy; 2025 Joe Hacker. All rights reserved.</p>
   </footer>
 
-  <!-- Скрипт для плавного скролла по якорям -->
+  <!-- Скрипт для переключения языков -->
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
+    function toggleLanguage() {
+      const ruElements = document.querySelectorAll('.lang-ru');
+      const enElements = document.querySelectorAll('.lang-en');
+      const toggleBtn = document.getElementById('lang-toggle');
+
+      if (toggleBtn.dataset.lang === 'ru') {
+        ruElements.forEach(el => el.style.display = 'none');
+        enElements.forEach(el => el.style.display = 'block');
+        toggleBtn.textContent = 'RU';
+        toggleBtn.dataset.lang = 'en';
+      } else {
+        ruElements.forEach(el => el.style.display = 'block');
+        enElements.forEach(el => el.style.display = 'none');
+        toggleBtn.textContent = 'EN';
+        toggleBtn.dataset.lang = 'ru';
+      }
+    }
+    document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
   </script>
 </body>
 </html>
