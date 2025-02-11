@@ -37,12 +37,12 @@
     /* Секция хедера */
     header {
       background: url('https://source.unsplash.com/1600x900/?technology') no-repeat center center/cover;
-      min-height: 100vh; /* Чтобы содержимое могло увеличиваться */
-      position: relative;
+      min-height: 100vh; /* Чтоб содержимое могло увеличиваться */
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      position: relative;
     }
     /* Затемняющий слой */
     header::after {
@@ -57,10 +57,12 @@
     }
     .hero-content {
       position: relative;
+      z-index: 2;
       text-align: center;
       color: #fff;
-      padding: 80px 20px; /* Добавлен отступ сверху и снизу для "воздуха" */
-      z-index: 2;
+      padding: 80px 20px; /* Отступы, чтобы текст и кнопки не слипались */
+      max-width: 800px;   /* Чтобы не растягивать контент слишком широко */
+      width: 100%;
     }
     .hero-content h1 {
       font-size: 3rem;
@@ -114,9 +116,9 @@
     /* Кнопки контактов */
     .contact-buttons {
       display: flex;
-      flex-wrap: wrap; /* Обёртка, чтобы кнопки переносились */
+      flex-wrap: wrap;   /* Чтобы кнопки могли переноситься на след. строку */
       justify-content: center;
-      gap: 15px; /* Расстояние между кнопками */
+      gap: 15px;         /* Расстояние между кнопками */
       margin-top: 20px;
     }
     .contact-buttons a {
@@ -126,7 +128,8 @@
       border-radius: 30px;
       transition: background 0.3s ease, color 0.3s ease;
       font-size: 1rem;
-      white-space: nowrap; /* Отключаем перенос в середине текста */
+      text-align: center; 
+      /* Убираем white-space: nowrap; чтобы текст мог переноситься */
     }
     .contact-buttons a:hover {
       background: #007aff;
@@ -145,21 +148,7 @@
         font-size: 2rem;
       }
       .hero-content p {
-        font-size: 1rem;
-        margin-bottom: 20px;
-      }
-    }
-    /* Дополнительная адаптивность для очень узких экранов (например, телефоны < 480px) */
-    @media (max-width: 480px) {
-      .hero-content h1 {
-        font-size: 1.8rem;
-      }
-      .hero-content p {
-        font-size: 0.9rem;
-      }
-      .contact-buttons a {
-        font-size: 0.9rem;
-        padding: 8px 16px;
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -181,9 +170,12 @@
         <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
+
       <!-- Английская версия (скрыта по умолчанию) -->
       <h1 class="lang-en" style="display:none;">Joe Hacker</h1>
-      <p class="lang-en" style="display:none;">Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.</p>
+      <p class="lang-en" style="display:none;">
+        Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.
+      </p>
       <div class="contact-buttons lang-en" style="display:none;">
         <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
         <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
@@ -306,11 +298,13 @@
       const toggleBtn = document.getElementById('lang-toggle');
 
       if (toggleBtn.dataset.lang === 'ru') {
+        // Переключаемся на английский
         ruElements.forEach(el => el.style.display = 'none');
         enElements.forEach(el => el.style.display = 'block');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
       } else {
+        // Переключаемся на русский
         ruElements.forEach(el => el.style.display = 'block');
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
