@@ -115,7 +115,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
+      gap: 15px; /* Расстояние между кнопками */
       margin-top: 20px;
     }
     .contact-buttons a {
@@ -156,18 +156,20 @@
       <p class="lang-ru">Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
       <div class="contact-buttons lang-ru">
         <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
       <!-- Английская версия (скрыта по умолчанию) -->
       <h1 class="lang-en" style="display:none;">Joe Hacker</h1>
       <p class="lang-en" style="display:none;">Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.</p>
       <div class="contact-buttons lang-en" style="display:none;">
         <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
     </div>
   </header>
@@ -253,15 +255,17 @@
     <div class="contact-buttons">
       <div class="lang-ru">
         <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
       <div class="lang-en" style="display:none;">
         <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini Apps</a>
+        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
     </div>
   </section>
@@ -293,6 +297,7 @@
         toggleBtn.dataset.lang = 'ru';
       }
     }
+
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
   </script>
 </body>
