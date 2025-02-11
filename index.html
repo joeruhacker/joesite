@@ -29,6 +29,7 @@
       align-items: center;
       justify-content: center;
     }
+    /* Затемняющий слой */
     header::after {
       content: '';
       position: absolute;
@@ -37,12 +38,25 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    /* Логотип в левом верхнем углу */
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+    }
+    .logo img {
+      width: 80px;
+      height: auto;
     }
     .hero-content {
       position: relative;
       text-align: center;
       color: #fff;
       padding: 0 20px;
+      z-index: 2;
     }
     .hero-content h1 {
       font-size: 3rem;
@@ -128,8 +142,11 @@
   </style>
 </head>
 <body>
-  <!-- Хедер с приветствием и контактными кнопками -->
+  <!-- Хедер с логотипом и приветствием -->
   <header id="home">
+    <div class="logo">
+      <img src="https://i.pinimg.com/1200x/14/d4/4d/14d44d2658b23272d002bbd675331106.jpg" alt="Логотип">
+    </div>
     <div class="hero-content">
       <h1>Джо Хакер</h1>
       <p>Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
