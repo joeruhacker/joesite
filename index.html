@@ -110,12 +110,12 @@
       margin-bottom: 10px;
       font-size: 1.4rem;
     }
-    /* Кнопки контактов */
+    /* Кнопки контактов и оплаты */
     .contact-buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px; /* Расстояние между кнопками */
+      gap: 15px;
       margin-top: 20px;
     }
     .contact-buttons a {
@@ -156,9 +156,7 @@
       <p class="lang-ru">Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
       <div class="contact-buttons lang-ru">
         <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
-        <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
       <!-- Английская версия (скрыта по умолчанию) -->
@@ -166,9 +164,7 @@
       <p class="lang-en" style="display:none;">Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.</p>
       <div class="contact-buttons lang-en" style="display:none;">
         <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
-        <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
     </div>
@@ -255,18 +251,26 @@
     <div class="contact-buttons">
       <div class="lang-ru">
         <a href="https://t.me/joe_hacker" target="_blank">Телеграм</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
-        <a href="https://t.me/JoeHacker_bot" target="_blank">Бот</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
       <div class="lang-en" style="display:none;">
         <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-        <a href="https://t.me/JoeHacker_bot/joehackerapp" target="_blank">Mini App</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
-        <a href="https://t.me/JoeHacker_bot" target="_blank">Bot</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Секция Приема оплаты через WalletConnect -->
+  <section id="payment">
+    <!-- Русская версия -->
+    <h2 class="section-title lang-ru">Оплата</h2>
+    <!-- Английская версия -->
+    <h2 class="section-title lang-en" style="display:none;">Payment</h2>
+    <div class="contact-buttons">
+      <!-- Кнопка оформлена так же, как и другие -->
+      <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
     </div>
   </section>
 
@@ -278,8 +282,13 @@
     <p class="lang-en" style="display:none;">&copy; 2025 Joe Hacker. All rights reserved.</p>
   </footer>
 
-  <!-- Скрипт для переключения языков -->
+  <!-- Подключение библиотек: ethers.js и WalletConnect Provider -->
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
+
+  <!-- Скрипты для переключения языков и интеграции WalletConnect -->
   <script>
+    // Переключение языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
@@ -297,8 +306,54 @@
         toggleBtn.dataset.lang = 'ru';
       }
     }
-
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+
+    // Функция для проведения оплаты через WalletConnect
+    async function initiatePayment() {
+      // Создаём экземпляр WalletConnect Provider с использованием публичного RPC для Ethereum Mainnet
+      const provider = new WalletConnectProvider.default({
+        rpc: {
+          1: "https://cloudflare-eth.com"
+        },
+        chainId: 1
+      });
+
+      // Запуск подключения (отобразится QR-код)
+      try {
+        await provider.enable();
+      } catch (error) {
+        console.error(error);
+        alert("Подключение отменено.");
+        return;
+      }
+
+      // Создаём объект ethers.js на основе полученного провайдера
+      const ethersProvider = new ethers.providers.Web3Provider(provider);
+      const signer = ethersProvider.getSigner();
+
+      // Задайте адрес получателя и сумму платежа (в ETH)
+      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // Замените на ваш Ethereum-адрес
+      const amountInEth = "0.01"; // Пример: 0.01 ETH
+
+      try {
+        const tx = await signer.sendTransaction({
+          to: recipientAddress,
+          value: ethers.utils.parseEther(amountInEth)
+        });
+        alert("Транзакция отправлена: " + tx.hash);
+        await tx.wait();
+        alert("Транзакция подтверждена!");
+      } catch (error) {
+        console.error(error);
+        alert("Ошибка транзакции: " + error.message);
+      }
+    }
+
+    // Привязываем функцию оплаты к кнопке
+    document.getElementById('walletconnect-btn').addEventListener('click', function(event) {
+      event.preventDefault();
+      initiatePayment();
+    });
   </script>
 </body>
 </html>
