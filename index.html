@@ -118,7 +118,8 @@
       gap: 15px;
       margin-top: 20px;
     }
-    .contact-buttons a {
+    .contact-buttons a,
+    .contact-buttons input {
       color: #007aff;
       border: 2px solid #007aff;
       padding: 10px 20px;
@@ -129,6 +130,10 @@
     .contact-buttons a:hover {
       background: #007aff;
       color: #fff;
+    }
+    .contact-buttons input {
+      outline: none;
+      width: auto;
     }
     /* Footer */
     footer {
@@ -155,7 +160,7 @@
       <h1 class="lang-ru">Джо Хакер</h1>
       <p class="lang-ru">Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
       <div class="contact-buttons lang-ru">
-        <a href="https://t.me/joe_hacker" target="_blank">Telagram</a>
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
         <a href="https://kwork.ru/user/joehacker" target="_blank">KWORK</a>
         <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
       </div>
@@ -262,14 +267,13 @@
     </div>
   </section>
 
-  <!-- Секция Приема оплаты через WalletConnect -->
+  <!-- Секция Приема оплаты через WalletConnect с вводом суммы в USDT -->
   <section id="payment">
-    <!-- Русская версия -->
-    <h2 class="section-title lang-ru">Оплата</h2>
-    <!-- Английская версия -->
-    <h2 class="section-title lang-en" style="display:none;">Payment</h2>
+    <h2 class="section-title lang-ru">Оплата (USDT)</h2>
+    <h2 class="section-title lang-en" style="display:none;">Payment (USDT)</h2>
     <div class="contact-buttons">
-      <!-- Кнопка оформлена так же, как и другие -->
+      <!-- Поле для ввода суммы (в USDT) и кнопка оплаты -->
+      <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
       <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
     </div>
   </section>
@@ -286,9 +290,9 @@
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
   <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
 
-  <!-- Скрипты для переключения языков и интеграции WalletConnect -->
+  <!-- Скрипты для переключения языков и интеграции WalletConnect для USDT -->
   <script>
-    // Переключение языков
+    // Функция переключения языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
@@ -308,13 +312,18 @@
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
 
-    // Функция для проведения оплаты через WalletConnect
+    // Функция для проведения оплаты через WalletConnect с USDT
     async function initiatePayment() {
+      // Получаем введённую сумму (в USDT)
+      const amountInUSDT = document.getElementById('payment-amount').value.trim();
+      if (!amountInUSDT || isNaN(amountInUSDT) || Number(amountInUSDT) <= 0) {
+        alert('Пожалуйста, введите корректную сумму в USDT.');
+        return;
+      }
+
       // Создаём экземпляр WalletConnect Provider с использованием публичного RPC для Ethereum Mainnet
       const provider = new WalletConnectProvider.default({
-        rpc: {
-          1: "https://cloudflare-eth.com"
-        },
+        rpc: { 1: "https://cloudflare-eth.com" },
         chainId: 1
       });
 
@@ -331,15 +340,21 @@
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
 
-      // Задайте адрес получателя и сумму платежа (в ETH)
-      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // Замените на ваш Ethereum-адрес
-      const amountInEth = "0.01"; // Пример: 0.01 ETH
+      // Укажите ваш Ethereum-адрес, куда будут поступать USDT
+      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // Замените на ваш адрес
+
+      // Адрес контракта USDT на Ethereum Mainnet (ERC‑20 USDT)
+      const usdtContractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+      // Минимальный ABI для функции transfer
+      const tokenAbi = [
+        "function transfer(address to, uint256 amount) public returns (bool)"
+      ];
+      const usdtContract = new ethers.Contract(usdtContractAddress, tokenAbi, signer);
 
       try {
-        const tx = await signer.sendTransaction({
-          to: recipientAddress,
-          value: ethers.utils.parseEther(amountInEth)
-        });
+        // USDT имеет 6 десятичных знаков – конвертируем сумму соответственно
+        const amountInUnits = ethers.utils.parseUnits(amountInUSDT, 6);
+        const tx = await usdtContract.transfer(recipientAddress, amountInUnits);
         alert("Транзакция отправлена: " + tx.hash);
         await tx.wait();
         alert("Транзакция подтверждена!");
