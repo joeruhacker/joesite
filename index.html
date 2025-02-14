@@ -147,6 +147,124 @@
       .hero-content h1 { font-size: 2.5rem; }
       .hero-content p { font-size: 1rem; }
     }
+
+    /* =========================== Стили для ЧАТА =========================== */
+    /* Контейнер всей секции чата */
+    #chat {
+      margin-top: 60px;
+    }
+
+    /* Основной контейнер чата */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    /* Зона сообщений */
+    .chat-messages {
+      flex: 1 1 auto;
+      padding: 16px;
+      height: 400px; /* Пример фиксированной высоты; можете менять по вкусу */
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Стиль для каждого сообщения */
+    .message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      line-height: 1.4;
+      word-wrap: break-word;
+      position: relative;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background-color: #007aff; /* ваш фирменный синий */
+      color: #fff;
+    }
+
+    .message.assistant {
+      align-self: flex-start;
+      background-color: #f7f7f7;
+      color: #333;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Футер чата: область ввода */
+    .chat-input-area {
+      background-color: #fff;
+      padding: 8px;
+      border-top: 1px solid #ddd;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Поле ввода */
+    .chat-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      padding: 10px 12px;
+      border-radius: 20px;
+      background-color: #f2f2f2;
+      resize: none;
+      max-height: 150px;
+      overflow-y: auto;
+      transition: background-color 0.3s ease;
+    }
+    .chat-input:focus {
+      background-color: #e9eff5;
+    }
+
+    /* Кнопка отправки */
+    .send-button {
+      background-color: #007aff;
+      border: none;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+    .send-button:hover {
+      background-color: #005bbf; /* Чуть темнее для hover */
+    }
+
+    /* Адаптивность для смартфонов (чат) */
+    @media (max-width: 600px) {
+      .chat-messages {
+        padding: 12px;
+      }
+      .chat-input {
+        font-size: 0.9rem;
+      }
+      .send-button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -175,70 +293,58 @@
     </div>
   </header>
 
-  <!-- Секция "Обо мне" / "About Me" -->
+  <!-- Секция "Обо мне" -->
   <section id="about">
-    <!-- Русская версия -->
     <h2 class="section-title lang-ru">Обо мне</h2>
     <p class="lang-ru" style="text-align: center; max-width: 800px; margin: 0 auto;">
       Меня зовут Джо Хакер, и я профессионал в области разработки телеграм-ботов, программирования на Python, создания скриптов, а также работы с HTML и JavaScript.
     </p>
-    <!-- Английская версия -->
     <h2 class="section-title lang-en" style="display:none;">About Me</h2>
     <p class="lang-en" style="display:none; text-align: center; max-width: 800px; margin: 0 auto;">
       My name is Joe Hacker, and I am a professional developer specializing in creating Telegram bots, programming in Python, writing scripts, and working with HTML and JavaScript.
     </p>
   </section>
 
-  <!-- Секция "Навыки и Компетенции" / "Skills and Expertise" -->
+  <!-- Секция "Навыки и Компетенции" -->
   <section id="skills">
-    <!-- Русская версия -->
     <h2 class="section-title lang-ru">Навыки и Компетенции</h2>
-    <!-- Английская версия -->
     <h2 class="section-title lang-en" style="display:none;">Skills and Expertise</h2>
     <div class="skills">
       <div class="skill">
-        <!-- Русская версия -->
         <h3 class="lang-ru">Разработка Телеграм-ботов</h3>
         <p class="lang-ru">
           Опыт создания и внедрения телеграм-ботов для различных целей – от автоматизации и поддержки клиентов до маркетинга и развлечений. Использование API Telegram и библиотек Python, таких как telebot. Интеграция ботов с веб-сервисами и базами данных.
         </p>
-        <!-- Английская версия -->
         <h3 class="lang-en" style="display:none;">Telegram Bot Development</h3>
         <p class="lang-en" style="display:none;">
           Experience in creating and implementing Telegram bots for various purposes – from automation and customer support to marketing and entertainment. Utilizing Telegram API and Python libraries such as telebot. Integration of bots with web services and databases.
         </p>
       </div>
       <div class="skill">
-        <!-- Русская версия -->
         <h3 class="lang-ru">Программирование на Python</h3>
         <p class="lang-ru">
           Глубокие знания языка Python и его применения в веб-разработке, анализе данных и автоматизации. Чистый и эффективный код с использованием принципов ООП. Опыт работы с фреймворками Django и Flask.
         </p>
-        <!-- Английская версия -->
         <h3 class="lang-en" style="display:none;">Python Programming</h3>
         <p class="lang-en" style="display:none;">
           In-depth knowledge of Python and its application in web development, data analysis, and automation. Clean and efficient code using OOP principles. Experience with Django and Flask frameworks.
         </p>
       </div>
       <div class="skill">
-        <!-- Русская версия -->
         <h3 class="lang-ru">Создание Скриптов</h3>
         <p class="lang-ru">
           Разработка скриптов для автоматизации рутинных задач и повышения эффективности рабочих процессов. Опыт работы с системами контроля версий, такими как Git.
         </p>
-        <!-- Английская версия -->
         <h3 class="lang-en" style="display:none;">Script Development</h3>
         <p class="lang-en" style="display:none;">
           Development of scripts for automating routine tasks and enhancing workflow efficiency. Experience with version control systems such as Git.
         </p>
       </div>
       <div class="skill">
-        <!-- Русская версия -->
         <h3 class="lang-ru">Работа с HTML и JavaScript</h3>
         <p class="lang-ru">
           Создание современных и адаптивных веб-страниц с использованием HTML5, CSS3 и JavaScript. Интеграция фронтенда с бэкендом для создания полноценных веб-приложений.
         </p>
-        <!-- Английская версия -->
         <h3 class="lang-en" style="display:none;">HTML & JavaScript Development</h3>
         <p class="lang-en" style="display:none;">
           Creating modern and responsive web pages using HTML5, CSS3, and JavaScript. Integrating frontend with backend to develop complete web applications.
@@ -247,11 +353,9 @@
     </div>
   </section>
 
-  <!-- Секция контактов / "Contact" -->
+  <!-- Секция "Контакты" -->
   <section id="contact">
-    <!-- Русская версия -->
     <h2 class="section-title lang-ru">Контакты</h2>
-    <!-- Английская версия -->
     <h2 class="section-title lang-en" style="display:none;">Contact</h2>
     <div class="contact-buttons">
       <div class="lang-ru">
@@ -267,22 +371,46 @@
     </div>
   </section>
 
-  <!-- Секция Приема оплаты через WalletConnect с вводом суммы в USDT -->
+  <!-- Секция Приема оплаты через WalletConnect -->
   <section id="payment">
     <h2 class="section-title lang-ru">Оплата (USDT)</h2>
     <h2 class="section-title lang-en" style="display:none;">Payment (USDT)</h2>
     <div class="contact-buttons">
-      <!-- Поле для ввода суммы (в USDT) и кнопка оплаты -->
       <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
       <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
     </div>
   </section>
 
+  <!-- =========================== Секция ЧАТА =========================== -->
+  <section id="chat">
+    <!-- Заголовки для RU/EN (если хотите), иначе можно убрать -->
+    <h2 class="section-title lang-ru">Задать вопрос</h2>
+    <h2 class="section-title lang-en" style="display:none;">Chat with GPT Web Bot</h2>
+
+    <div class="chat-container">
+      <!-- Зона сообщений -->
+      <div id="chatMessages" class="chat-messages">
+        <!-- Сообщения добавляются через JS -->
+      </div>
+      <!-- Футер чата: поле ввода и кнопка -->
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            class="chat-input"
+            rows="1"
+            placeholder="Спросите у бота..."
+            onkeydown="handleKeyDown(event)"
+          ></textarea>
+          <button class="send-button" onclick="sendMessage()">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
-    <!-- Русская версия -->
     <p class="lang-ru">&copy; 2025 Джо Хакер. Все права защищены.</p>
-    <!-- Английская версия -->
     <p class="lang-en" style="display:none;">&copy; 2025 Joe Hacker. All rights reserved.</p>
   </footer>
 
@@ -290,9 +418,10 @@
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
   <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
 
-  <!-- Скрипты для переключения языков и интеграции WalletConnect для USDT -->
+  <!-- Скрипты: переключение языка и WalletConnect -->
   <script>
-    // Функция переключения языков
+    // --------------------------------------
+    // Переключение языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
@@ -312,22 +441,19 @@
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
 
-    // Функция для проведения оплаты через WalletConnect с USDT
+    // --------------------------------------
+    // Оплата через WalletConnect в USDT
     async function initiatePayment() {
-      // Получаем введённую сумму (в USDT)
       const amountInUSDT = document.getElementById('payment-amount').value.trim();
       if (!amountInUSDT || isNaN(amountInUSDT) || Number(amountInUSDT) <= 0) {
         alert('Пожалуйста, введите корректную сумму в USDT.');
         return;
       }
 
-      // Создаём экземпляр WalletConnect Provider с использованием публичного RPC для Ethereum Mainnet
       const provider = new WalletConnectProvider.default({
         rpc: { 1: "https://cloudflare-eth.com" },
         chainId: 1
       });
-
-      // Запуск подключения (отобразится QR-код)
       try {
         await provider.enable();
       } catch (error) {
@@ -336,23 +462,16 @@
         return;
       }
 
-      // Создаём объект ethers.js на основе полученного провайдера
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
-
-      // Укажите ваш Ethereum-адрес, куда будут поступать USDT
       const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // Замените на ваш адрес
-
-      // Адрес контракта USDT на Ethereum Mainnet (ERC‑20 USDT)
       const usdtContractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-      // Минимальный ABI для функции transfer
       const tokenAbi = [
         "function transfer(address to, uint256 amount) public returns (bool)"
       ];
       const usdtContract = new ethers.Contract(usdtContractAddress, tokenAbi, signer);
 
       try {
-        // USDT имеет 6 десятичных знаков – конвертируем сумму соответственно
         const amountInUnits = ethers.utils.parseUnits(amountInUSDT, 6);
         const tx = await usdtContract.transfer(recipientAddress, amountInUnits);
         alert("Транзакция отправлена: " + tx.hash);
@@ -363,12 +482,88 @@
         alert("Ошибка транзакции: " + error.message);
       }
     }
-
-    // Привязываем функцию оплаты к кнопке
     document.getElementById('walletconnect-btn').addEventListener('click', function(event) {
       event.preventDefault();
       initiatePayment();
     });
+  </script>
+
+  <!-- Скрипт работы чата (связь с Flask-бэкендом) -->
+  <script>
+    // Укажите ваш URL бекэнда (Flask)
+    const BACKEND_URL = "https://a32524-55b5.u.d-f.pw/ask";
+
+    const chatMessages = document.getElementById("chatMessages");
+    const userInput = document.getElementById("userInput");
+
+    // Функция добавления сообщения в чат
+    function appendMessage(text, sender) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", sender);
+      messageDiv.innerText = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Отправка сообщения
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) {
+        alert("Введите сообщение!");
+        return;
+      }
+      // Сообщение пользователя
+      appendMessage(message, "user");
+      userInput.value = "";
+      adjustTextareaHeight();
+
+      // Временное сообщение о загрузке
+      const loadingMessage = document.createElement("div");
+      loadingMessage.classList.add("message", "assistant");
+      loadingMessage.innerText = "Загрузка...";
+      chatMessages.appendChild(loadingMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Запрос к бэкенду
+      fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Ошибка при запросе к серверу");
+        }
+        return response.json();
+      })
+      .then(data => {
+        loadingMessage.remove();
+        if (data.reply) {
+          appendMessage(data.reply, "assistant");
+        } else if (data.error) {
+          appendMessage("Ошибка: " + data.error, "assistant");
+        }
+      })
+      .catch(error => {
+        loadingMessage.remove();
+        appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
+      });
+    }
+
+    // Отправка при нажатии Enter (если не зажат Shift)
+    function handleKeyDown(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+      adjustTextareaHeight();
+    }
+
+    // Автоподгонка высоты textarea
+    function adjustTextareaHeight() {
+      userInput.style.height = "auto";
+      userInput.style.height = userInput.scrollHeight + "px";
+    }
   </script>
 </body>
 </html>
