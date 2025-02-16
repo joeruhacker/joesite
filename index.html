@@ -517,11 +517,12 @@
 
     // Функция для конвертации ссылок в кликабельные элементы
     function convertLinks(text) {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      return text.replace(urlRegex, function(url) {
-        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
-      });
-    }
+  const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
+  return text.replace(urlRegex, (match, url, trailing) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+  });
+}
+
 
     // Функция добавления сообщения в чат
     function appendMessage(text, sender) {
