@@ -197,7 +197,7 @@
 
     .message.user {
       align-self: flex-end;
-      background-color: #007aff; /* ваш фирменный синий */
+      background-color: #007aff;
       color: #fff;
     }
 
@@ -256,7 +256,7 @@
       font-size: 1rem;
     }
     .send-button:hover {
-      background-color: #005bbf; /* Чуть темнее для hover */
+      background-color: #005bbf;
     }
 
     /* Адаптивность для смартфонов (чат) */
@@ -390,7 +390,7 @@
 
   <!-- =========================== Секция ЧАТА =========================== -->
   <section id="chat">
-    <!-- Заголовки для RU/EN (если хотите), иначе можно убрать -->
+    <!-- Заголовки для RU/EN -->
     <h2 class="section-title lang-ru">Задать вопрос</h2>
     <h2 class="section-title lang-en" style="display:none;">Ask a question</h2>
 
@@ -427,28 +427,40 @@
 
   <!-- Скрипты: переключение языка и WalletConnect -->
   <script>
-    // --------------------------------------
-    // Переключение языков
+    // Переключение языков с обновлением placeholder и текста кнопок
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
       const toggleBtn = document.getElementById('lang-toggle');
+      const paymentInput = document.getElementById('payment-amount');
+      const chatInput = document.getElementById('userInput');
+      const walletConnectBtn = document.getElementById('walletconnect-btn');
+      const sendButton = document.querySelector('.send-button');
 
       if (toggleBtn.dataset.lang === 'ru') {
         ruElements.forEach(el => el.style.display = 'none');
         enElements.forEach(el => el.style.display = 'block');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
+        // Обновляем placeholder и кнопки для английской версии
+        paymentInput.placeholder = "Enter amount in USDT";
+        chatInput.placeholder = "Ask the bot...";
+        walletConnectBtn.textContent = "Pay with WalletConnect";
+        sendButton.textContent = "Send";
       } else {
         ruElements.forEach(el => el.style.display = 'block');
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
         toggleBtn.dataset.lang = 'ru';
+        // Обновляем placeholder и кнопки для русской версии
+        paymentInput.placeholder = "Введите сумму в USDT";
+        chatInput.placeholder = "Спросите у бота...";
+        walletConnectBtn.textContent = "Оплатить через WalletConnect";
+        sendButton.textContent = "Отправить";
       }
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
 
-    // --------------------------------------
     // Оплата через WalletConnect в USDT
     async function initiatePayment() {
       const amountInUSDT = document.getElementById('payment-amount').value.trim();
@@ -497,17 +509,25 @@
 
   <!-- Скрипт работы чата (связь с Flask-бэкендом) -->
   <script>
-    // Укажите ваш URL бекэнда (Flask)
+    // URL бекэнда (Flask)
     const BACKEND_URL = "https://a32524-55b5.u.d-f.pw/ask";
 
     const chatMessages = document.getElementById("chatMessages");
     const userInput = document.getElementById("userInput");
 
+    // Функция для конвертации ссылок в кликабельные элементы
+    function convertLinks(text) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+      });
+    }
+
     // Функция добавления сообщения в чат
     function appendMessage(text, sender) {
       const messageDiv = document.createElement("div");
       messageDiv.classList.add("message", sender);
-      messageDiv.innerText = text;
+      messageDiv.innerHTML = convertLinks(text);
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -557,7 +577,7 @@
       });
     }
 
-    // Отправка при нажатии Enter (если не зажат Shift)
+    // Отправка по нажатию Enter (если не зажат Shift)
     function handleKeyDown(event) {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
