@@ -507,86 +507,93 @@
     });
   </script>
 
-  <!-- Скрипт работы чата (связь с Flask-бэкендом) -->
-  <script>
-    // URL бекэнда (Flask)
-    const BACKEND_URL = "https://n8n.joehacker.tech/webhook-test/ask";
+  <!-- Скрипт работы чата (связь с бэкендом) -->
+<script>
+  // URL бекэнда 
+  const BACKEND_URL = "https://n8n.joehacker.tech/webhook-test/ask";
 
-    const chatMessages = document.getElementById("chatMessages");
-    const userInput = document.getElementById("userInput");
+  const chatMessages = document.getElementById("chatMessages");
+  const userInput = document.getElementById("userInput");
 
-    // Функция для конвертации ссылок в кликабельные элементы
-    function convertLinks(text) {
-  const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
-  return text.replace(urlRegex, (match, url, trailing) => {
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
-  });
-}
+  // Функция для конвертации ссылок в кликабельные элементы
+  function convertLinks(text) {
+    const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
+    return text.replace(urlRegex, (match, url, trailing) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+    });
+  }
 
+  // Функция добавления сообщения в чат
+  function appendMessage(text, sender) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", sender);
+    messageDiv.innerHTML = convertLinks(text);
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 
-
-    // Функция добавления сообщения в чат
-    function appendMessage(text, sender) {
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("message", sender);
-      messageDiv.innerHTML = convertLinks(text);
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Отправка сообщения
+  function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) {
+      alert("Введите сообщение!");
+      return;
     }
+    // Сообщение пользователя
+    appendMessage(message, "user");
+    userInput.value = "";
+    adjustTextareaHeight();
 
-    // Отправка сообщения
-    function sendMessage() {
-      const message = userInput.value.trim();
-      if (!message) {
-        alert("Введите сообщение!");
-        return;
+    // Временное сообщение о загрузке
+    const loadingMessage = document.createElement("div");
+    loadingMessage.classList.add("message", "assistant");
+    loadingMessage.innerText = "Загрузка...";
+    chatMessages.appendChild(loadingMessage);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Запрос к бэкенду
+    fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: message }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Ошибка при запросе к серверу");
       }
-      // Сообщение пользователя
-      appendMessage(message, "user");
-      userInput.value = "";
-      adjustTextareaHeight();
-
-      // Временное сообщение о загрузке
-      const loadingMessage = document.createElement("div");
-      loadingMessage.classList.add("message", "assistant");
-      loadingMessage.innerText = "Загрузка...";
-      chatMessages.appendChild(loadingMessage);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      // Запрос к бэкенду
-      fetch(BACKEND_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: message }),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Ошибка при запросе к серверу");
-        }
-        return response.json();
-      })
-      .then(data => {
-        loadingMessage.remove();
-        if (data.reply) {
-          appendMessage(data.reply, "assistant");
-        } else if (data.error) {
-          appendMessage("Ошибка: " + data.error, "assistant");
-        }
-      })
-      .catch(error => {
-        loadingMessage.remove();
-        appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
-      });
-    }
-
-    // Отправка по нажатию Enter (если не зажат Shift)
-    function handleKeyDown(event) {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
+      return response.json();
+    })
+    .then(data => {
+      loadingMessage.remove();
+      let replyText = "";
+      // Если получаем массив с объектом, в котором есть output
+      if (Array.isArray(data) && data.length > 0 && data[0].output) {
+        replyText = data[0].output;
+      } else if (data.reply) {
+        replyText = data.reply;
+      } else if (data.error) {
+        replyText = "Ошибка: " + data.error;
+      } else {
+        replyText = "Неизвестный ответ от сервера.";
       }
-      adjustTextareaHeight();
+      appendMessage(replyText, "assistant");
+    })
+    .catch(error => {
+      loadingMessage.remove();
+      appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
+    });
+  }
+
+  // Отправка по нажатию Enter (если не зажат Shift)
+  function handleKeyDown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
     }
+    adjustTextareaHeight();
+  }
+</script>
+
 
     // Автоподгонка высоты textarea
     function adjustTextareaHeight() {
