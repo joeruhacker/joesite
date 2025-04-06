@@ -160,7 +160,6 @@
     #chat {
       margin-top: 60px;
     }
-
     /* Основной контейнер чата */
     .chat-container {
       display: flex;
@@ -172,18 +171,16 @@
       background-color: #fff;
       overflow: hidden;
     }
-
     /* Зона сообщений */
     .chat-messages {
       flex: 1 1 auto;
       padding: 16px;
-      height: 400px; /* Пример фиксированной высоты; можете менять по вкусу */
+      height: 400px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-
     /* Стиль для каждого сообщения */
     .message {
       max-width: 80%;
@@ -194,38 +191,32 @@
       position: relative;
       animation: fadeIn 0.3s ease forwards;
     }
-
     .message.user {
       align-self: flex-end;
       background-color: #007aff;
       color: #fff;
     }
-
     .message.assistant {
       align-self: flex-start;
       background-color: #f7f7f7;
       color: #333;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     /* Футер чата: область ввода */
     .chat-input-area {
       background-color: #fff;
       padding: 8px;
       border-top: 1px solid #ddd;
     }
-
     .input-container {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     /* Поле ввода */
     .chat-input {
       flex: 1;
@@ -243,7 +234,6 @@
     .chat-input:focus {
       background-color: #e9eff5;
     }
-
     /* Кнопка отправки */
     .send-button {
       background-color: #007aff;
@@ -258,7 +248,6 @@
     .send-button:hover {
       background-color: #005bbf;
     }
-
     /* Адаптивность для смартфонов (чат) */
     @media (max-width: 600px) {
       .chat-messages {
@@ -388,12 +377,10 @@
     </div>
   </section>
 
-  <!-- =========================== Секция ЧАТА =========================== -->
+  <!-- Секция ЧАТА -->
   <section id="chat">
-    <!-- Заголовки для RU/EN -->
     <h2 class="section-title lang-ru">Задать вопрос</h2>
     <h2 class="section-title lang-en" style="display:none;">Ask a question</h2>
-
     <div class="chat-container">
       <!-- Зона сообщений -->
       <div id="chatMessages" class="chat-messages">
@@ -427,7 +414,7 @@
 
   <!-- Скрипты: переключение языка и WalletConnect -->
   <script>
-    // Переключение языков с обновлением placeholder и текста кнопок
+    // Переключение языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
@@ -442,7 +429,6 @@
         enElements.forEach(el => el.style.display = 'block');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
-        // Обновляем placeholder и кнопки для английской версии
         paymentInput.placeholder = "Enter amount in USDT";
         chatInput.placeholder = "Ask the bot...";
         walletConnectBtn.textContent = "Pay with WalletConnect";
@@ -452,7 +438,6 @@
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
         toggleBtn.dataset.lang = 'ru';
-        // Обновляем placeholder и кнопки для русской версии
         paymentInput.placeholder = "Введите сумму в USDT";
         chatInput.placeholder = "Спросите у бота...";
         walletConnectBtn.textContent = "Оплатить через WalletConnect";
@@ -483,7 +468,7 @@
 
       const ethersProvider = new ethers.providers.Web3Provider(provider);
       const signer = ethersProvider.getSigner();
-      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // Замените на ваш адрес
+      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // замените на ваш адрес
       const usdtContractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
       const tokenAbi = [
         "function transfer(address to, uint256 amount) public returns (bool)"
@@ -507,93 +492,86 @@
     });
   </script>
 
-  <!-- Скрипт работы чата (связь с бэкендом) -->
-<script>
-  // URL бекэнда 
-  const BACKEND_URL = "https://n8n.joehacker.tech/webhook-test/ask";
+  <!-- Скрипт работы чата -->
+  <script>
+    // URL бекэнда
+    const BACKEND_URL = "https://n8n.joehacker.tech/webhook-test/ask";
+    const chatMessages = document.getElementById("chatMessages");
+    const userInput = document.getElementById("userInput");
 
-  const chatMessages = document.getElementById("chatMessages");
-  const userInput = document.getElementById("userInput");
-
-  // Функция для конвертации ссылок в кликабельные элементы
-  function convertLinks(text) {
-    const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
-    return text.replace(urlRegex, (match, url, trailing) => {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
-    });
-  }
-
-  // Функция добавления сообщения в чат
-  function appendMessage(text, sender) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", sender);
-    messageDiv.innerHTML = convertLinks(text);
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  // Отправка сообщения
-  function sendMessage() {
-    const message = userInput.value.trim();
-    if (!message) {
-      alert("Введите сообщение!");
-      return;
+    // Функция конвертации ссылок в кликабельные элементы
+    function convertLinks(text) {
+      const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
+      return text.replace(urlRegex, (match, url, trailing) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+      });
     }
-    // Сообщение пользователя
-    appendMessage(message, "user");
-    userInput.value = "";
-    adjustTextareaHeight();
 
-    // Временное сообщение о загрузке
-    const loadingMessage = document.createElement("div");
-    loadingMessage.classList.add("message", "assistant");
-    loadingMessage.innerText = "Загрузка...";
-    chatMessages.appendChild(loadingMessage);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // Запрос к бэкенду
-    fetch(BACKEND_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: message }),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Ошибка при запросе к серверу");
-      }
-      return response.json();
-    })
-    .then(data => {
-      loadingMessage.remove();
-      let replyText = "";
-      // Если получаем массив с объектом, в котором есть output
-      if (Array.isArray(data) && data.length > 0 && data[0].output) {
-        replyText = data[0].output;
-      } else if (data.reply) {
-        replyText = data.reply;
-      } else if (data.error) {
-        replyText = "Ошибка: " + data.error;
-      } else {
-        replyText = "Неизвестный ответ от сервера.";
-      }
-      appendMessage(replyText, "assistant");
-    })
-    .catch(error => {
-      loadingMessage.remove();
-      appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
-    });
-  }
-
-  // Отправка по нажатию Enter (если не зажат Shift)
-  function handleKeyDown(event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      sendMessage();
+    // Функция добавления сообщения в чат
+    function appendMessage(text, sender) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", sender);
+      messageDiv.innerHTML = convertLinks(text);
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    adjustTextareaHeight();
-  }
-</script>
 
+    // Отправка сообщения
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) {
+        alert("Введите сообщение!");
+        return;
+      }
+      appendMessage(message, "user");
+      userInput.value = "";
+      adjustTextareaHeight();
+
+      const loadingMessage = document.createElement("div");
+      loadingMessage.classList.add("message", "assistant");
+      loadingMessage.innerText = "Загрузка...";
+      chatMessages.appendChild(loadingMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Ошибка при запросе к серверу");
+        }
+        return response.json();
+      })
+      .then(data => {
+        loadingMessage.remove();
+        let replyText = "";
+        if (Array.isArray(data) && data.length > 0 && data[0].output) {
+          replyText = data[0].output;
+        } else if (data.reply) {
+          replyText = data.reply;
+        } else if (data.error) {
+          replyText = "Ошибка: " + data.error;
+        } else {
+          replyText = "Неизвестный ответ от сервера.";
+        }
+        appendMessage(replyText, "assistant");
+      })
+      .catch(error => {
+        loadingMessage.remove();
+        appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
+      });
+    }
+
+    // Отправка по нажатию Enter (если не зажат Shift)
+    function handleKeyDown(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+      adjustTextareaHeight();
+    }
 
     // Автоподгонка высоты textarea
     function adjustTextareaHeight() {
