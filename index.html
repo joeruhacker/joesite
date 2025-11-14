@@ -367,6 +367,10 @@
         color: #000;
       }
     }
+
+    .nowrap {
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -475,8 +479,8 @@
 
   <!-- Секция Приема оплаты через WalletConnect -->
   <section id="payment">
-    <h2 class="section-title lang-ru">Оплата (USDT) ERC-20</h2>
-    <h2 class="section-title lang-en" style="display:none;">Payment (USDT) ERC-20</h2>
+    <h2 class="section-title lang-ru">Оплата (USDT) <span class="nowrap">ERC-20</span></h2>
+    <h2 class="section-title lang-en" style="display:none;">Payment (USDT) <span class="nowrap">ERC-20</span></h2>
     <div class="contact-buttons">
       <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
       <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
