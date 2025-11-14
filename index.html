@@ -43,7 +43,7 @@
     }
     /* Секция хедера */
     header {
-      background: #3a3a3a;
+      background: url('https://source.unsplash.com/1600x900/?technology') no-repeat center center/cover;
       height: 100vh;
       position: relative;
       display: flex;
@@ -62,8 +62,6 @@
       z-index: 1;
     }
     .hero-content {
-      max-width: 90%;
-      margin: 0 auto;
       position: relative;
       text-align: center;
       color: #fff;
@@ -72,13 +70,11 @@
     }
     .hero-content h1 {
       font-size: 3rem;
-      line-height: 1.2;
       margin-bottom: 20px;
       animation: fadeInDown 1s ease forwards;
     }
     .hero-content p {
       font-size: 1.2rem;
-      line-height: 1.5;
       margin-bottom: 40px;
       animation: fadeInUp 1s ease forwards;
     }
@@ -100,19 +96,12 @@
       text-align: center;
       margin-bottom: 40px;
       font-size: 2rem;
-      word-wrap: break-word;
     }
     /* Блок навыков */
     .skills {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .skills {
-        grid-template-columns: 1fr;
-      }
     }
     .skill {
       background-color: #f7f7f7;
@@ -133,27 +122,18 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      max-width: 100%;
-      text-align: center;
+      gap: 15px;
+      margin-top: 20px;
     }
     .contact-buttons a,
     .contact-buttons input {
       color: #007aff;
       border: 2px solid #007aff;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: 30px;
       transition: background 0.3s ease, color 0.3s ease;
       font-size: 1rem;
       background-color: transparent;
-      min-width: auto;
-      text-align: center;
-      display: inline-block;
-      white-space: nowrap;
-      max-width: 100%;
-      width: auto;
     }
     .contact-buttons a:hover {
       background: #007aff;
@@ -191,14 +171,12 @@
       border-radius: 10px;
       background-color: #fff;
       overflow: hidden;
-      min-height: 420px;
     }
     /* Зона сообщений */
     .chat-messages {
       flex: 1 1 auto;
       padding: 16px;
       height: 400px;
-      min-height: 280px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -276,88 +254,43 @@
 
     /* Адаптивность для смартфонов (чат + общая компоновка оплаты) */
     @media (max-width: 600px) {
-      section {
-        padding: 40px 18px;
+      .chat-messages {
+        padding: 12px;
       }
-
-      .contact-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        width: 100%;
-      }
-
-      .contact-buttons a,
-      .contact-buttons input {
-        width: auto;
-        padding: 10px 20px;
-        font-size: 1rem;
-        border-radius: 30px;
-      }
-
-      #payment .contact-buttons {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      #payment .contact-buttons a,
-      #payment .contact-buttons input {
-        width: 100%;
-        max-width: 350px;
-      }
-
-      .hero-content h1 {
-        font-size: 2rem;
-        line-height: 1.25;
-        word-break: break-word;
-      }
-
-      .hero-content p {
-        font-size: 0.95rem;
-        line-height: 1.35;
-        word-break: break-word;
-      }
-
-      #lang-toggle {
-        top: 14px;
-        right: 14px;
-        padding: 8px 13px;
-        border-radius: 26px;
+      .chat-input {
         font-size: 0.9rem;
       }
-    }
-
-    @media (max-width: 375px) {
-      #lang-toggle {
-        top: 10px;
-        right: 10px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-        border-radius: 20px;
-      }
-
-      .contact-buttons a,
-      .contact-buttons input {
+      .send-button {
         font-size: 0.9rem;
         padding: 8px 12px;
-        max-width: 90%;
-        width: 100%;
-        text-align: center;
       }
 
+      /* Уменьшаем отступы секций на мобильных,
+         чтобы блок оплаты и чат не уезжали далеко вниз */
+      section {
+        padding: 30px 15px;
+      }
+
+      /* Сближаем блоки "Контакты" и "Оплата" */
+      #contact {
+        padding-bottom: 20px;
+      }
+      #payment {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      /* Кнопки оплаты и поле ввода в одну колонку */
       #payment .contact-buttons {
         flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
       }
-
-      .section-title {
-        font-size: 1.5rem;
-      }
-
-      .hero-content p {
-        font-size: 0.95rem;
+      #payment input,
+      #payment a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 16px;
       }
     }
 
@@ -432,11 +365,6 @@
       #lang-toggle {
         background-color: #4da3ff;
         color: #000;
-      }
-      section {
-        padding: 60px 20px;
-        max-width: 1200px;
-        margin: 0 auto;
       }
     }
   </style>
@@ -531,15 +459,17 @@
   <section id="contact">
     <h2 class="section-title lang-ru">Контакты</h2>
     <h2 class="section-title lang-en" style="display:none;">Contact</h2>
-
     <div class="contact-buttons">
-      <a class="lang-ru" href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-      <a class="lang-ru" href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
-      <a class="lang-ru" href="https://github.com/joeruhacker" target="_blank">GitHub</a>
-
-      <a class="lang-en" style="display:none;" href="https://t.me/joe_hacker" target="_blank">Telegram</a>
-      <a class="lang-en" style="display:none;" href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
-      <a class="lang-en" style="display:none;" href="https://github.com/joeruhacker" target="_blank">GitHub</a>
+      <div class="lang-ru">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
+      </div>
+      <div class="lang-en" style="display:none;">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
+      </div>
     </div>
   </section>
 
@@ -548,8 +478,8 @@
     <h2 class="section-title lang-ru">Оплата (USDT) ERC-20</h2>
     <h2 class="section-title lang-en" style="display:none;">Payment (USDT) ERC-20</h2>
     <div class="contact-buttons">
-      <input type="text" id="payment-amount" placeholder="0.00">
-      <a href="#" id="walletconnect-btn" class="wallet-button">Оплатить через WalletConnect</a>
+      <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
+      <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
     </div>
   </section>
 
@@ -605,7 +535,6 @@
         enElements.forEach(el => el.style.display = 'block');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
-        localStorage.setItem('lang', 'en');
         paymentInput.placeholder = "Enter amount in USDT";
         chatInput.placeholder = "Ask the bot...";
         walletConnectBtn.textContent = "Pay with WalletConnect";
@@ -615,18 +544,11 @@
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
         toggleBtn.dataset.lang = 'ru';
-        localStorage.setItem('lang', 'ru');
         paymentInput.placeholder = "Введите сумму в USDT";
         chatInput.placeholder = "Спросите у бота...";
         walletConnectBtn.textContent = "Оплатить через WalletConnect";
         sendButton.textContent = "Отправить";
       }
-    }
-    // Инициализация языка при загрузке страницы
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'en') {
-      document.getElementById('lang-toggle').dataset.lang = 'ru';
-      toggleLanguage();
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
 
@@ -765,39 +687,3 @@
   </script>
 </body>
 </html>
-
-    @media (max-width: 480px) {
-      .contact-buttons a,
-      .contact-buttons input {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      #lang-toggle {
-        top: 12px;
-        right: 12px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-      }
-
-      .section-title {
-        font-size: 1.4rem;
-        word-break: break-word;
-      }
-
-      .hero-content p {
-        font-size: 0.95rem;
-        line-height: 1.4;
-      }
-
-      #payment h2.section-title {
-        word-break: keep-all;
-        white-space: nowrap;
-      }
-    }
-
-    .hero-content p,
-    .section-title,
-    .skill p {
-      word-break: break-word;
-    }
