@@ -122,8 +122,11 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       gap: 15px;
       margin-top: 20px;
+      width: 100%;
+      text-align: center;
     }
     .contact-buttons a,
     .contact-buttons input {
@@ -285,7 +288,9 @@
       /* Кнопки оплаты и поле ввода в одну колонку */
       #payment .contact-buttons {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
         gap: 12px;
       }
       #payment input,
@@ -465,7 +470,7 @@
   </section>
 
   <!-- Секция "Контакты" -->
-  <section id="contact">
+  <section id="contact" style="text-align:center;">
     <h2 class="section-title lang-ru">Контакты</h2>
     <h2 class="section-title lang-en" style="display:none;">Contact</h2>
     <div class="contact-buttons lang-ru">
