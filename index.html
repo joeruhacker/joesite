@@ -183,6 +183,13 @@
       gap: 12px;
       background-color: #fff;
     }
+
+    @supports (-webkit-touch-callout: none) {
+      .chat-messages {
+        height: calc(100vh - 260px);
+        max-height: calc(100vh - 260px);
+      }
+    }
     /* Стиль для каждого сообщения */
     .message {
       max-width: 80%;
