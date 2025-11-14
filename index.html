@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Джо Хакер - Фрилансер Программист</title>
 
+  <!-- SEO meta tags -->
+  <meta name="description" content="Профессиональная разработка Telegram-ботов, Python-скриптов, сайтов и автоматизации. Джо Хакер — разработчик с опытом.">
+  <meta property="og:title" content="Джо Хакер — Разработка Telegram-ботов и Python-скриптов">
+  <meta property="og:description" content="Создание Telegram-ботов, Python-автоматизации, веб-разработки. Оплата в USDT.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/apple-touch-icon.png">
+  <meta property="og:url" content="https://your-site-url.com">
+
   <!-- Иконки и манифест -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -44,7 +52,7 @@
     /* Секция хедера */
     header {
       background: url('https://source.unsplash.com/1600x900/?technology') no-repeat center center/cover;
-      height: 100vh;
+      height: 85vh;
       position: relative;
       display: flex;
       align-items: center;
@@ -127,21 +135,43 @@
     }
     .contact-buttons a,
     .contact-buttons input {
-      color: #007aff;
-      border: 2px solid #007aff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      transition: background 0.3s ease, color 0.3s ease;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 20px;
       font-size: 1rem;
-      background-color: transparent;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 12px rgba(0, 122, 255, 0.4);
+      transition: all 0.3s ease;
     }
     .contact-buttons a:hover {
-      background: #007aff;
+      background: rgba(0, 122, 255, 0.9);
+      box-shadow: 0 0 18px rgba(0, 122, 255, 0.8);
       color: #fff;
     }
     .contact-buttons input {
       outline: none;
       width: auto;
+    }
+    #floating-menu {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 12px 16px;
+      border-radius: 16px;
+      display: flex;
+      gap: 10px;
+      z-index: 999;
+    }
+    #floating-menu a {
+      color: #007aff;
+      font-size: 0.9rem;
+    }
+    #payment h2 {
+      white-space: nowrap;
     }
     /* Footer */
     footer {
@@ -476,7 +506,7 @@
   <!-- Секция Приема оплаты через WalletConnect -->
   <section id="payment">
     <h2 class="section-title lang-ru">Оплата (USDT) ERC-20</h2>
-    <h2 class="section-title lang-en" style="display:none;">Payment (USDT) ERC-20</h2>
+    <h2 class="section-title lang-en" style="display:none;">Payment (USDT) ERC‑20</h2>
     <div class="contact-buttons">
       <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
       <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
@@ -686,4 +716,10 @@
     }
   </script>
 </body>
+  <div id="floating-menu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
 </html>
