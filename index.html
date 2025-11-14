@@ -133,6 +133,7 @@
       border-radius: 30px;
       transition: background 0.3s ease, color 0.3s ease;
       font-size: 1rem;
+      background-color: transparent;
     }
     .contact-buttons a:hover {
       background: #007aff;
@@ -180,6 +181,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      background-color: #fff;
     }
     /* Стиль для каждого сообщения */
     .message {
@@ -230,6 +232,7 @@
       max-height: 150px;
       overflow-y: auto;
       transition: background-color 0.3s ease;
+      color: #333;
     }
     .chat-input:focus {
       background-color: #e9eff5;
@@ -248,7 +251,8 @@
     .send-button:hover {
       background-color: #005bbf;
     }
-    /* Адаптивность для смартфонов (чат) */
+
+    /* Адаптивность для смартфонов (чат + общая компоновка оплаты) */
     @media (max-width: 600px) {
       .chat-messages {
         padding: 12px;
@@ -259,6 +263,108 @@
       .send-button {
         font-size: 0.9rem;
         padding: 8px 12px;
+      }
+
+      /* Уменьшаем отступы секций на мобильных,
+         чтобы блок оплаты и чат не уезжали далеко вниз */
+      section {
+        padding: 30px 15px;
+      }
+
+      /* Сближаем блоки "Контакты" и "Оплата" */
+      #contact {
+        padding-bottom: 20px;
+      }
+      #payment {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      /* Кнопки оплаты и поле ввода в одну колонку */
+      #payment .contact-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      #payment input,
+      #payment a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 16px;
+      }
+    }
+
+    /* Автоматическая тёмная тема по настройкам системы */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #050505;
+        color: #e5e5e5;
+      }
+      header::after {
+        background: rgba(0, 0, 0, 0.55);
+      }
+      .section-title {
+        color: #e5e5e5;
+      }
+      .skill {
+        background-color: #181818;
+        box-shadow: none;
+      }
+      .skill:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      }
+      .contact-buttons a,
+      .contact-buttons input {
+        color: #4da3ff;
+        border-color: #4da3ff;
+        background-color: transparent;
+      }
+      .contact-buttons a:hover {
+        background-color: #4da3ff;
+        color: #000;
+      }
+      .contact-buttons input {
+        background-color: #151515;
+        color: #e5e5e5;
+      }
+      .chat-container {
+        background-color: #101010;
+        border-color: #333;
+      }
+      .chat-messages {
+        background-color: #101010;
+      }
+      .message.assistant {
+        background-color: #1b1b1b;
+        color: #e5e5e5;
+        box-shadow: none;
+      }
+      .message.user {
+        background-color: #4da3ff;
+        color: #000;
+      }
+      .chat-input-area {
+        background-color: #101010;
+        border-top-color: #333;
+      }
+      .chat-input {
+        background-color: #181818;
+        color: #e5e5e5;
+      }
+      .chat-input:focus {
+        background-color: #202020;
+      }
+      .send-button {
+        background-color: #4da3ff;
+        color: #000;
+      }
+      footer {
+        background-color: #101010;
+        color: #aaaaaa;
+      }
+      #lang-toggle {
+        background-color: #4da3ff;
+        color: #000;
       }
     }
   </style>
