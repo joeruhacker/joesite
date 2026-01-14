@@ -525,9 +525,10 @@
     <p class="lang-en" style="display:none;">&copy; 2026 Joe Hacker. All rights reserved.</p>
   </footer>
 
-  <!-- Подключение библиотек: ethers.js и WalletConnect Provider -->
+  <!-- Подключение библиотек: ethers.js и WalletConnect v2 Provider + Modal -->
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-  <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
 
   <!-- Скрипты: переключение языка и WalletConnect -->
   <script>
@@ -571,15 +572,26 @@
         return;
       }
 
-      const provider = new WalletConnectProvider.default({
-        rpc: { 1: "https://cloudflare-eth.com" },
-        chainId: 1
-      });
+      // WalletConnect v2 (MetaMask и другие кошельки). Нужен projectId из WalletConnect Cloud.
+      const WC_PROJECT_ID = "adc12080d6cc09b5febb8220064e7399"; // <-- ваш WalletConnect projectId
+
+      let provider;
       try {
-        await provider.enable();
+        provider = await EthereumProvider.init({
+          projectId: WC_PROJECT_ID,
+          chains: [1],
+          optionalChains: [1],
+          showQrModal: true, // покажет QR/модалку для подключения
+          rpcMap: {
+            1: "https://cloudflare-eth.com"
+          }
+        });
+
+        // Откроет QR/диплинк и подключит кошелёк
+        await provider.connect();
       } catch (error) {
         console.error(error);
-        alert("Подключение отменено.");
+        alert("Подключение отменено или не удалось: " + (error?.message || error));
         return;
       }
 
@@ -697,4 +709,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
