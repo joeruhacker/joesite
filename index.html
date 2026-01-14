@@ -20,9 +20,14 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background-color: #fff;
-      color: #333;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(0, 122, 255, 0.18), transparent 60%),
+                  radial-gradient(900px 600px at 80% 30%, rgba(175, 82, 222, 0.14), transparent 55%),
+                  radial-gradient(900px 700px at 40% 90%, rgba(52, 199, 89, 0.12), transparent 60%),
+                  #f6f7fb;
+      color: #0b0b0f;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     a {
       text-decoration: none;
@@ -58,15 +63,21 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
       z-index: 1;
     }
     .hero-content {
       position: relative;
       text-align: center;
       color: #fff;
-      padding: 0 20px;
+      padding: 22px 22px;
       z-index: 2;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
     }
     .hero-content h1 {
       font-size: 3rem;
@@ -104,14 +115,14 @@
       gap: 20px;
     }
     .skill {
-      background-color: #f7f7f7;
-      border-radius: 10px;
+      border-radius: 16px;
       padding: 20px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .skill:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
     .skill h3 {
       margin-bottom: 10px;
@@ -127,28 +138,32 @@
     }
     .contact-buttons a,
     .contact-buttons input {
-      color: #007aff;
-      border: 2px solid #007aff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      transition: background 0.3s ease, color 0.3s ease;
+      color: #0b0b0f;
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
       font-size: 1rem;
-      background-color: transparent;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
     }
     .contact-buttons a:hover {
-      background: #007aff;
-      color: #fff;
-    }
-    .contact-buttons input {
-      outline: none;
-      width: auto;
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.85);
+      color: #0b0b0f;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.10);
     }
     /* Footer */
     footer {
       text-align: center;
       padding: 20px;
-      background-color: #f1f1f1;
-      color: #666;
+      background: rgba(255, 255, 255, 0.55);
+      color: rgba(11, 11, 15, 0.65);
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     /* Адаптивность */
     @media (max-width: 768px) {
@@ -167,10 +182,13 @@
       flex-direction: column;
       max-width: 800px;
       margin: 0 auto;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background-color: #fff;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.10);
     }
     /* Зона сообщений */
     .chat-messages {
@@ -181,7 +199,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background-color: #fff;
+      background: rgba(255, 255, 255, 0.25);
     }
 
     @supports (-webkit-touch-callout: none) {
@@ -194,22 +212,26 @@
     .message {
       max-width: 80%;
       padding: 10px 14px;
-      border-radius: 16px;
+      border-radius: 18px;
       line-height: 1.4;
       word-wrap: break-word;
       position: relative;
       animation: fadeIn 0.3s ease forwards;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .message.user {
       align-self: flex-end;
-      background-color: #007aff;
+      background: rgba(0, 122, 255, 0.95);
       color: #fff;
+      border-color: rgba(0, 122, 255, 0.35);
     }
     .message.assistant {
       align-self: flex-start;
-      background-color: #f7f7f7;
-      color: #333;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.70);
+      color: #0b0b0f;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(5px); }
@@ -217,9 +239,11 @@
     }
     /* Футер чата: область ввода */
     .chat-input-area {
-      background-color: #fff;
-      padding: 8px;
-      border-top: 1px solid #ddd;
+      background: rgba(255, 255, 255, 0.45);
+      padding: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
     .input-container {
       display: flex;
@@ -229,34 +253,37 @@
     /* Поле ввода */
     .chat-input {
       flex: 1;
-      border: none;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       outline: none;
       font-size: 1rem;
       padding: 10px 12px;
-      border-radius: 20px;
-      background-color: #f2f2f2;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.70);
       resize: none;
       max-height: 150px;
       overflow-y: auto;
-      transition: background-color 0.3s ease;
-      color: #333;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      color: #0b0b0f;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
     }
     .chat-input:focus {
-      background-color: #e9eff5;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.10);
     }
-    /* Кнопка отправки */
     .send-button {
-      background-color: #007aff;
-      border: none;
+      background: rgba(0, 122, 255, 0.95);
+      border: 1px solid rgba(0, 122, 255, 0.30);
       color: #fff;
       padding: 10px 16px;
-      border-radius: 20px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
       font-size: 1rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
     }
     .send-button:hover {
-      background-color: #005bbf;
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.14);
     }
 
     /* Адаптивность для смартфонов (чат + общая компоновка оплаты) */
@@ -304,7 +331,10 @@
     /* Автоматическая тёмная тема по настройкам системы */
     @media (prefers-color-scheme: dark) {
       body {
-        background-color: #050505;
+        background: radial-gradient(1200px 800px at 20% 10%, rgba(77, 163, 255, 0.18), transparent 60%),
+                    radial-gradient(900px 600px at 80% 30%, rgba(191, 90, 242, 0.14), transparent 55%),
+                    radial-gradient(900px 700px at 40% 90%, rgba(48, 209, 88, 0.12), transparent 60%),
+                    #050505;
         color: #e5e5e5;
       }
       header::after {
@@ -314,8 +344,11 @@
         color: #e5e5e5;
       }
       .skill {
-        background-color: #181818;
-        box-shadow: none;
+        background-color: rgba(20, 20, 20, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
       }
       .skill:hover {
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -335,28 +368,32 @@
         color: #e5e5e5;
       }
       .chat-container {
-        background-color: #101010;
-        border-color: #333;
+        background-color: rgba(16, 16, 16, 0.55);
+        border-color: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
       }
       .chat-messages {
-        background-color: #101010;
+        background-color: rgba(16, 16, 16, 0.25);
       }
       .message.assistant {
-        background-color: #1b1b1b;
+        background-color: rgba(27, 27, 27, 0.65);
         color: #e5e5e5;
         box-shadow: none;
+        border-color: rgba(255, 255, 255, 0.10);
       }
       .message.user {
         background-color: #4da3ff;
         color: #000;
       }
       .chat-input-area {
-        background-color: #101010;
-        border-top-color: #333;
+        background-color: rgba(16, 16, 16, 0.45);
+        border-top-color: rgba(255, 255, 255, 0.10);
       }
       .chat-input {
-        background-color: #181818;
+        background-color: rgba(24, 24, 24, 0.70);
         color: #e5e5e5;
+        border-color: rgba(255, 255, 255, 0.12);
       }
       .chat-input:focus {
         background-color: #202020;
@@ -366,8 +403,9 @@
         color: #000;
       }
       footer {
-        background-color: #101010;
-        color: #aaaaaa;
+        background-color: rgba(16, 16, 16, 0.55);
+        color: rgba(229, 229, 229, 0.70);
+        border-top-color: rgba(255, 255, 255, 0.10);
       }
       #lang-toggle {
         background-color: #4da3ff;
@@ -485,16 +523,6 @@
   </section>
 
 
-  <!-- Секция оплаты через MetaMask -->
-  <section id="metamask-payment">
-    <h2 class="section-title lang-ru">Оплата через MetaMask</h2>
-    <h2 class="section-title lang-en" style="display:none;">Pay with MetaMask</h2>
-    <div class="contact-buttons">
-      <input type="number" id="mm-amount" placeholder="Сумма (ETH)" step="0.0001" min="0">
-      <a href="#" id="mm-pay-btn">Pay with MetaMask</a>
-    </div>
-  </section>
-
 
   <!-- Секция ЧАТА -->
   <section id="chat">
@@ -527,8 +555,7 @@
     <p class="lang-en" style="display:none;">&copy; 2026 Joe Hacker. All rights reserved.</p>
   </footer>
 
-  <!-- Подключение библиотек: ethers.js и WalletConnect v2 Provider + Modal -->
-  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+
 
   <!-- Скрипты: переключение языка -->
   <script>
@@ -547,8 +574,6 @@
         toggleBtn.dataset.lang = 'en';
         chatInput.placeholder = "Ask the bot...";
         sendButton.textContent = "Send";
-        // Update MetaMask input placeholder
-        document.getElementById('mm-amount').placeholder = "Amount (ETH)";
       } else {
         ruElements.forEach(el => el.style.display = 'block');
         enElements.forEach(el => el.style.display = 'none');
@@ -556,8 +581,6 @@
         toggleBtn.dataset.lang = 'ru';
         chatInput.placeholder = "Спросите у бота...";
         sendButton.textContent = "Отправить";
-        // Update MetaMask input placeholder
-        document.getElementById('mm-amount').placeholder = "Сумма (ETH)";
       }
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
@@ -648,60 +671,6 @@
     function adjustTextareaHeight() {
       userInput.style.height = "auto";
       userInput.style.height = userInput.scrollHeight + "px";
-    }
-  </script>
-
-  <!-- Оплата через MetaMask (native ETH) -->
-  <script>
-    const MM_RECIPIENT = "0x23504c14320be88c57bc948fc8ec28402a766118"; // ETH-only recipient
-
-    async function payWithMetaMask() {
-      if (!window.ethereum) {
-        alert("MetaMask не найден. Установите MetaMask.");
-        return;
-      }
-
-      // Разрешаем ТОЛЬКО Ethereum Mainnet
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (chainId !== '0x1') {
-        alert('Пожалуйста, переключитесь на Ethereum Mainnet (ETH).');
-        return;
-      }
-
-      const amount = document.getElementById('mm-amount').value;
-      if (!amount || Number(amount) <= 0) {
-        alert("Введите сумму ETH");
-        return;
-      }
-
-      try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const from = accounts[0];
-
-        const valueWei = BigInt(Math.floor(Number(amount) * 1e18)).toString(16);
-
-        await window.ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [{
-            from: from,
-            to: MM_RECIPIENT,
-            value: '0x' + valueWei
-          }]
-        });
-
-        alert("Транзакция отправлена. После подтверждения пришлите TX hash в Telegram.");
-      } catch (err) {
-        console.error(err);
-        alert("Платеж отменён или произошла ошибка: " + (err.message || err));
-      }
-    }
-
-    const mmBtn = document.getElementById('mm-pay-btn');
-    if (mmBtn) {
-      mmBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        payWithMetaMask();
-      });
     }
   </script>
 </body>
