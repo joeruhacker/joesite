@@ -484,15 +484,17 @@
     </div>
   </section>
 
-  <!-- Секция Приема оплаты через WalletConnect -->
-  <section id="payment">
-    <h2 class="section-title lang-ru">Оплата <span class="nowrap">(USDT) ERC-20</span></h2>
-    <h2 class="section-title lang-en" style="display:none;">Payment <span class="nowrap">(USDT) ERC-20</span></h2>
+
+  <!-- Секция оплаты через MetaMask -->
+  <section id="metamask-payment">
+    <h2 class="section-title lang-ru">Оплата через MetaMask</h2>
+    <h2 class="section-title lang-en" style="display:none;">Pay with MetaMask</h2>
     <div class="contact-buttons">
-      <input type="text" id="payment-amount" placeholder="Введите сумму в USDT">
-      <a href="#" id="walletconnect-btn">Оплатить через WalletConnect</a>
+      <input type="number" id="mm-amount" placeholder="Сумма (ETH)" step="0.0001" min="0">
+      <a href="#" id="mm-pay-btn">Pay with MetaMask</a>
     </div>
   </section>
+
 
   <!-- Секция ЧАТА -->
   <section id="chat">
@@ -527,19 +529,15 @@
 
   <!-- Подключение библиотек: ethers.js и WalletConnect v2 Provider + Modal -->
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
 
-  <!-- Скрипты: переключение языка и WalletConnect -->
+  <!-- Скрипты: переключение языка -->
   <script>
     // Переключение языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
       const enElements = document.querySelectorAll('.lang-en');
       const toggleBtn = document.getElementById('lang-toggle');
-      const paymentInput = document.getElementById('payment-amount');
       const chatInput = document.getElementById('userInput');
-      const walletConnectBtn = document.getElementById('walletconnect-btn');
       const sendButton = document.querySelector('.send-button');
 
       if (toggleBtn.dataset.lang === 'ru') {
@@ -547,119 +545,22 @@
         enElements.forEach(el => el.style.display = 'block');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
-        paymentInput.placeholder = "Enter amount in USDT";
         chatInput.placeholder = "Ask the bot...";
-        walletConnectBtn.textContent = "Pay with WalletConnect";
         sendButton.textContent = "Send";
+        // Update MetaMask input placeholder
+        document.getElementById('mm-amount').placeholder = "Amount (ETH)";
       } else {
         ruElements.forEach(el => el.style.display = 'block');
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
         toggleBtn.dataset.lang = 'ru';
-        paymentInput.placeholder = "Введите сумму в USDT";
         chatInput.placeholder = "Спросите у бота...";
-        walletConnectBtn.textContent = "Оплатить через WalletConnect";
         sendButton.textContent = "Отправить";
+        // Update MetaMask input placeholder
+        document.getElementById('mm-amount').placeholder = "Сумма (ETH)";
       }
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
-
-    // Оплата через WalletConnect в USDT
-    async function initiatePayment() {
-      const amountInUSDT = document.getElementById('payment-amount').value.trim();
-      if (!amountInUSDT || isNaN(amountInUSDT) || Number(amountInUSDT) <= 0) {
-        alert('Пожалуйста, введите корректную сумму в USDT.');
-        return;
-      }
-
-      // WalletConnect v2 (MetaMask и другие кошельки). Нужен projectId из WalletConnect Cloud.
-      const WC_PROJECT_ID = "adc12080d6cc09b5febb8220064e7399"; // <-- ваш WalletConnect projectId
-
-      let provider;
-      try {
-        // Для продакшена: WalletConnect работает корректно только по HTTPS.
-        // GitHub Pages и кастомный домен дают HTTPS автоматически.
-        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-        if (!isLocal && location.protocol !== 'https:') {
-          throw new Error('Откройте страницу по HTTPS (иначе WalletConnect может не работать).');
-        }
-
-        // На проде/у пользователей CDN может иногда блокироваться.
-        // Если глобальный провайдер не найден — пробуем подгрузить UMD-скрипты динамически.
-        async function loadScript(url) {
-          return new Promise((resolve, reject) => {
-            const existing = document.querySelector(`script[src="${url}"]`);
-            if (existing) return resolve();
-            const s = document.createElement('script');
-            s.src = url;
-            s.async = true;
-            s.onload = resolve;
-            s.onerror = () => reject(new Error('Не удалось загрузить скрипт: ' + url));
-            document.head.appendChild(s);
-          });
-        }
-
-        let WC_EthereumProvider = window.EthereumProvider || window.WalletConnectEthereumProvider;
-        if (!WC_EthereumProvider || typeof WC_EthereumProvider.init !== 'function') {
-          // Пытаемся догрузить (на случай если HTML кешируется/скрипты не успели/были заблокированы)
-          try {
-            await loadScript('https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js');
-            await loadScript('https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js');
-          } catch (e) {
-            console.warn(e);
-          }
-          WC_EthereumProvider = window.EthereumProvider || window.WalletConnectEthereumProvider;
-        }
-
-        if (!WC_EthereumProvider || typeof WC_EthereumProvider.init !== 'function') {
-          throw new Error(
-            'WalletConnect не загрузился. Проверьте, что домен добавлен в Reown/WalletConnect Cloud (Domain), ' +
-            'и что в браузере не блокируются CDN-скрипты (AdBlock/Brave Shields).'
-          );
-        }
-
-        provider = await WC_EthereumProvider.init({
-          projectId: WC_PROJECT_ID,
-          chains: [1],
-          optionalChains: [1],
-          showQrModal: true, // покажет QR/модалку для подключения
-          rpcMap: {
-            1: "https://cloudflare-eth.com"
-          }
-        });
-
-        // Откроет QR/диплинк и подключит кошелёк
-        await provider.connect();
-      } catch (error) {
-        console.error(error);
-        alert("Подключение отменено или не удалось: " + (error?.message || error));
-        return;
-      }
-
-      const ethersProvider = new ethers.providers.Web3Provider(provider);
-      const signer = ethersProvider.getSigner();
-      const recipientAddress = "0x4a584e43052cb2915D520329Dc72B645bFe34AE9"; // замените на ваш адрес
-      const usdtContractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-      const tokenAbi = [
-        "function transfer(address to, uint256 amount) public returns (bool)"
-      ];
-      const usdtContract = new ethers.Contract(usdtContractAddress, tokenAbi, signer);
-
-      try {
-        const amountInUnits = ethers.utils.parseUnits(amountInUSDT, 6);
-        const tx = await usdtContract.transfer(recipientAddress, amountInUnits);
-        alert("Транзакция отправлена: " + tx.hash);
-        await tx.wait();
-        alert("Транзакция подтверждена!");
-      } catch (error) {
-        console.error(error);
-        alert("Ошибка транзакции: " + error.message);
-      }
-    }
-    document.getElementById('walletconnect-btn').addEventListener('click', function(event) {
-      event.preventDefault();
-      initiatePayment();
-    });
   </script>
 
   <!-- Скрипт работы чата -->
@@ -747,6 +648,60 @@
     function adjustTextareaHeight() {
       userInput.style.height = "auto";
       userInput.style.height = userInput.scrollHeight + "px";
+    }
+  </script>
+
+  <!-- Оплата через MetaMask (native ETH) -->
+  <script>
+    const MM_RECIPIENT = "0x23504c14320be88c57bc948fc8ec28402a766118"; // ETH-only recipient
+
+    async function payWithMetaMask() {
+      if (!window.ethereum) {
+        alert("MetaMask не найден. Установите MetaMask.");
+        return;
+      }
+
+      // Разрешаем ТОЛЬКО Ethereum Mainnet
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      if (chainId !== '0x1') {
+        alert('Пожалуйста, переключитесь на Ethereum Mainnet (ETH).');
+        return;
+      }
+
+      const amount = document.getElementById('mm-amount').value;
+      if (!amount || Number(amount) <= 0) {
+        alert("Введите сумму ETH");
+        return;
+      }
+
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const from = accounts[0];
+
+        const valueWei = BigInt(Math.floor(Number(amount) * 1e18)).toString(16);
+
+        await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: from,
+            to: MM_RECIPIENT,
+            value: '0x' + valueWei
+          }]
+        });
+
+        alert("Транзакция отправлена. После подтверждения пришлите TX hash в Telegram.");
+      } catch (err) {
+        console.error(err);
+        alert("Платеж отменён или произошла ошибка: " + (err.message || err));
+      }
+    }
+
+    const mmBtn = document.getElementById('mm-pay-btn');
+    if (mmBtn) {
+      mmBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        payWithMetaMask();
+      });
     }
   </script>
 </body>
