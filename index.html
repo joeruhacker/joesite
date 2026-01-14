@@ -527,8 +527,8 @@
 
   <!-- Подключение библиотек: ethers.js и WalletConnect v2 Provider + Modal -->
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-  <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js"></script>
-  <script src="https://unpkg.com/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
 
   <!-- Скрипты: переключение языка и WalletConnect -->
   <script>
@@ -577,7 +577,48 @@
 
       let provider;
       try {
-        provider = await EthereumProvider.init({
+        // Для продакшена: WalletConnect работает корректно только по HTTPS.
+        // GitHub Pages и кастомный домен дают HTTPS автоматически.
+        const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        if (!isLocal && location.protocol !== 'https:') {
+          throw new Error('Откройте страницу по HTTPS (иначе WalletConnect может не работать).');
+        }
+
+        // На проде/у пользователей CDN может иногда блокироваться.
+        // Если глобальный провайдер не найден — пробуем подгрузить UMD-скрипты динамически.
+        async function loadScript(url) {
+          return new Promise((resolve, reject) => {
+            const existing = document.querySelector(`script[src="${url}"]`);
+            if (existing) return resolve();
+            const s = document.createElement('script');
+            s.src = url;
+            s.async = true;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('Не удалось загрузить скрипт: ' + url));
+            document.head.appendChild(s);
+          });
+        }
+
+        let WC_EthereumProvider = window.EthereumProvider || window.WalletConnectEthereumProvider;
+        if (!WC_EthereumProvider || typeof WC_EthereumProvider.init !== 'function') {
+          // Пытаемся догрузить (на случай если HTML кешируется/скрипты не успели/были заблокированы)
+          try {
+            await loadScript('https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.14.2/dist/index.umd.js');
+            await loadScript('https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js');
+          } catch (e) {
+            console.warn(e);
+          }
+          WC_EthereumProvider = window.EthereumProvider || window.WalletConnectEthereumProvider;
+        }
+
+        if (!WC_EthereumProvider || typeof WC_EthereumProvider.init !== 'function') {
+          throw new Error(
+            'WalletConnect не загрузился. Проверьте, что домен добавлен в Reown/WalletConnect Cloud (Domain), ' +
+            'и что в браузере не блокируются CDN-скрипты (AdBlock/Brave Shields).'
+          );
+        }
+
+        provider = await WC_EthereumProvider.init({
           projectId: WC_PROJECT_ID,
           chains: [1],
           optionalChains: [1],
@@ -709,4 +750,4 @@
     }
   </script>
 </body>
-</html> 
+</html>
