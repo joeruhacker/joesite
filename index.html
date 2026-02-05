@@ -416,6 +416,48 @@
     .nowrap {
       white-space: nowrap;
     }
+
+    /* Иконка политики конфиденциальности в футере */
+    .footer-privacy {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .privacy-icon {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .privacy-icon:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.10);
+    }
+    .privacy-icon svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .privacy-icon {
+        border-color: rgba(255, 255, 255, 0.14);
+        background: rgba(16, 16, 16, 0.55);
+        box-shadow: none;
+      }
+      .privacy-icon:hover {
+        background: rgba(27, 27, 27, 0.65);
+      }
+    }
   </style>
 </head>
 <body>
@@ -553,6 +595,24 @@
   <footer>
     <p class="lang-ru">&copy; 2026 Джо Хакер. Все права защищены.</p>
     <p class="lang-en" style="display:none;">&copy; 2026 Joe Hacker. All rights reserved.</p>
+
+    <!-- Политика конфиденциальности (иконка-ссылка) -->
+    <div class="footer-privacy">
+      <a class="privacy-icon lang-ru" href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности" title="Политика конфиденциальности" style="display:inline-flex;">
+        <!-- маленькое лого-иконка (щит) -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L20 6V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.8" />
+          <path d="M9 12.5L11 14.5L15.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+
+      <a class="privacy-icon lang-en" href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer" aria-label="Privacy Policy" title="Privacy Policy" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L20 6V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.8" />
+          <path d="M9 12.5L11 14.5L15.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
   </footer>
 
 
