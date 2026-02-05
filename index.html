@@ -458,6 +458,92 @@
         background: rgba(27, 27, 27, 0.65);
       }
     }
+
+    /* =========================== Cookie Banner =========================== */
+    .cookie-banner {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 250;
+      display: none;
+    }
+
+    .cookie-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .cookie-text {
+      font-size: 0.92rem;
+      line-height: 1.35;
+      color: rgba(11, 11, 15, 0.85);
+    }
+
+    .cookie-text a {
+      color: #007aff;
+      text-decoration: none;
+    }
+
+    .cookie-ok {
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: rgba(0, 122, 255, 0.95);
+      border: 1px solid rgba(0, 122, 255, 0.30);
+      color: #fff;
+      font-size: 0.95rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .cookie-ok:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    }
+
+    @media (max-width: 520px) {
+      .cookie-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cookie-ok {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cookie-inner {
+        background: rgba(16, 16, 16, 0.72);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: none;
+      }
+      .cookie-text {
+        color: rgba(229, 229, 229, 0.82);
+      }
+      .cookie-text a {
+        color: #4da3ff;
+      }
+      .cookie-ok {
+        background: #4da3ff;
+        color: #000;
+        border-color: rgba(77, 163, 255, 0.35);
+      }
+    }
   </style>
 </head>
 <body>
@@ -615,6 +701,25 @@
     </div>
   </footer>
 
+  <!-- Cookie banner (essential cookies only) -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <div class="lang-ru">
+          🍪 Этот сайт использует cookies только для базовой функциональности и безопасности.
+          Продолжая использование сайта, вы соглашаетесь с
+          <a href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer">Политикой конфиденциальности</a>.
+        </div>
+        <div class="lang-en" style="display:none;">
+          🍪 This website uses cookies only for essential functionality and security.
+          By continuing to use the site, you agree to the
+          <a href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        </div>
+      </div>
+      <button id="cookie-ok" class="cookie-ok" type="button">OK</button>
+    </div>
+  </div>
+
 
 
   <!-- Скрипты: переключение языка -->
@@ -642,8 +747,59 @@
         chatInput.placeholder = "Спросите у бота...";
         sendButton.textContent = "Отправить";
       }
+      syncCookieBannerLanguage();
     }
     document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+
+    // =========================== Cookie banner logic ===========================
+    const COOKIE_BANNER_KEY = 'cookiesAccepted';
+
+    function showCookieBannerIfNeeded() {
+      const banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+
+      try {
+        const accepted = localStorage.getItem(COOKIE_BANNER_KEY) === 'true';
+        banner.style.display = accepted ? 'none' : 'block';
+      } catch (e) {
+        // If storage is blocked, show the banner
+        banner.style.display = 'block';
+      }
+    }
+
+    function syncCookieBannerLanguage() {
+      const banner = document.getElementById('cookie-banner');
+      const toggleBtn = document.getElementById('lang-toggle');
+      if (!banner || !toggleBtn) return;
+
+      const isRu = toggleBtn.dataset.lang === 'ru';
+      const ruBlocks = banner.querySelectorAll('.lang-ru');
+      const enBlocks = banner.querySelectorAll('.lang-en');
+
+      ruBlocks.forEach(el => el.style.display = isRu ? 'block' : 'none');
+      enBlocks.forEach(el => el.style.display = isRu ? 'none' : 'block');
+    }
+
+    function acceptCookies() {
+      const banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+
+      try {
+        localStorage.setItem(COOKIE_BANNER_KEY, 'true');
+      } catch (e) {
+        // ignore
+      }
+      banner.style.display = 'none';
+    }
+
+    // Wire up cookie OK button + init
+    const cookieOkBtn = document.getElementById('cookie-ok');
+    if (cookieOkBtn) {
+      cookieOkBtn.addEventListener('click', acceptCookies);
+    }
+
+    showCookieBannerIfNeeded();
+    syncCookieBannerLanguage();
   </script>
 
   <!-- Скрипт работы чата -->
