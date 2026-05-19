@@ -1,1 +1,1269 @@
-REPLACE_WITH_CURRENT_FILE
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Джо Хакер - Фрилансер Программист</title>
+  <meta name="description" content="Joe Hacker — профессиональный разработчик Telegram-ботов, Python-скриптов и веб-приложений. Автоматизация, парсеры, OpenAI API, HTML, JavaScript, интеграции и backend-разработка.">
+
+  <meta name="keywords" content="Telegram bot developer, Python developer, Telegram bots, automation, parser, OpenAI API, HTML, JavaScript">
+
+  <meta name="author" content="Joe Hacker">
+
+  <meta property="og:title" content="Joe Hacker - Telegram Bots & Python Development">
+  <meta property="og:description" content="Разработка Telegram-ботов, Python-автоматизация, OpenAI API, парсеры и веб-разработка.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://joehacker.tech">
+
+  <!-- Иконки и манифест -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <style>
+    /* Сброс стилей */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(0, 122, 255, 0.18), transparent 60%),
+                  radial-gradient(900px 600px at 80% 30%, rgba(175, 82, 222, 0.14), transparent 55%),
+                  radial-gradient(900px 700px at 40% 90%, rgba(52, 199, 89, 0.12), transparent 60%),
+                  #f6f7fb;
+      color: #0b0b0f;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+    a {
+      text-decoration: none;
+    }
+    .top-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(5, 12, 24, 0.46);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+    }
+
+    .top-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.86);
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    }
+
+    .top-nav a:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .top-nav {
+        top: calc(env(safe-area-inset-top) + 12px);
+        left: 10px;
+        right: 66px;
+        transform: none;
+        overflow-x: hidden;
+        justify-content: space-between;
+        gap: 2px;
+        padding: 5px;
+        background: rgba(5, 12, 24, 0.36);
+        border-color: rgba(255,255,255,0.16);
+      }
+      .top-nav a {
+        min-height: 34px;
+        padding: 0 5px;
+        font-size: 0.74rem;
+        letter-spacing: -0.02em;
+        flex: 1 1 0;
+      }
+    }
+    /* Кнопка переключения языка */
+    #lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #007aff;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 15px;
+      min-width: 54px;
+      min-height: 44px;
+      cursor: pointer;
+      z-index: 130;
+      font-size: 1rem;
+    }
+    @media (max-width: 720px) {
+      #lang-toggle {
+        top: calc(env(safe-area-inset-top) + 12px);
+        right: 10px;
+        min-width: 50px;
+        min-height: 44px;
+        padding: 8px 10px;
+        font-size: 0.9rem;
+      }
+    }
+    /* Секция хедера */
+    header {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 122, 255, 0.42), transparent 32%),
+        radial-gradient(circle at 80% 25%, rgba(175, 82, 222, 0.34), transparent 34%),
+        radial-gradient(circle at 50% 85%, rgba(52, 199, 89, 0.22), transparent 38%),
+        linear-gradient(135deg, #030712 0%, #07111f 45%, #050505 100%);
+      background-size: 120% 120%;
+      animation: premiumGradient 14s ease-in-out infinite alternate;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.08), transparent 18%),
+        radial-gradient(circle at 75% 35%, rgba(77,163,255,0.08), transparent 22%);
+      opacity: 0.55;
+      z-index: 1;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(0, 122, 255, 0.22), transparent 24%),
+        radial-gradient(circle at 78% 38%, rgba(175, 82, 222, 0.18), transparent 26%),
+        linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.42));
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-bg-orb {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.34;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: heroOrbMove 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    .hero-bg-orb.orb-blue {
+      left: 8%;
+      top: 18%;
+      background: rgba(0, 122, 255, 0.72);
+    }
+
+    .hero-bg-orb.orb-purple {
+      right: 7%;
+      top: 22%;
+      background: rgba(175, 82, 222, 0.62);
+      animation-delay: 1.8s;
+      animation-duration: 15s;
+    }
+
+    .hero-bg-orb.orb-green {
+      left: 38%;
+      bottom: 8%;
+      background: rgba(52, 199, 89, 0.45);
+      animation-delay: 3s;
+      animation-duration: 18s;
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: -40%;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(255,255,255,0.08), transparent 16%),
+        radial-gradient(circle at 70% 60%, rgba(0,122,255,0.10), transparent 18%);
+      animation: heroLinesMove 22s ease-in-out infinite alternate;
+      opacity: 0.34;
+      filter: blur(10px);
+    }
+
+    @keyframes heroOrbMove {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(70px, -45px, 0) scale(1.12); }
+      100% { transform: translate3d(-45px, 60px, 0) scale(0.94); }
+    }
+
+    @keyframes heroLinesMove {
+      from { transform: translate3d(0, 0, 0) rotate(0deg); }
+      to { transform: translate3d(160px, 120px, 0) rotate(1deg); }
+    }
+
+    @media (max-width: 600px) {
+      .hero-bg-orb {
+        width: 220px;
+        height: 220px;
+        filter: blur(30px);
+      }
+    }
+
+
+    @keyframes premiumGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 40%; }
+      100% { background-position: 30% 100%; }
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      color: #fff;
+      padding: 34px 36px;
+      z-index: 2;
+      border-radius: 28px;
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 18px;
+      background: rgba(5, 12, 24, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      box-shadow:
+        0 32px 90px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    .hero-content h1 {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      margin-bottom: 18px;
+      letter-spacing: -0.04em;
+      animation: fadeInDown 1s ease forwards;
+    }
+    .hero-content p {
+      max-width: 620px;
+      margin: 0 auto 34px;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      animation: fadeInUp 1s ease forwards;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Общие секции */
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2rem;
+    }
+    /* Блок навыков */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .skill {
+      border-radius: 16px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+    .skill h3 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+    /* Кнопки контактов и оплаты */
+    .contact-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .contact-buttons a,
+    .contact-buttons input {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 132px;
+      min-height: 46px;
+      color: #0b0b0f;
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      padding: 11px 18px;
+      border-radius: 999px;
+      transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      white-space: nowrap;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .contact-buttons a:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.85);
+      color: #0b0b0f;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.10);
+    }
+
+    .hero-content .contact-buttons a {
+      color: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 14px 34px rgba(0,0,0,0.18);
+    }
+
+    .hero-content .contact-buttons a:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border-color: rgba(255,255,255,0.30);
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.55);
+      color: rgba(11, 11, 15, 0.65);
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      header {
+        min-height: 100svh;
+        height: 100svh;
+        align-items: flex-start;
+        padding-top: calc(env(safe-area-inset-top) + 180px);
+      }
+      .hero-content {
+        width: calc(100% - 32px);
+        margin: 0 16px;
+        padding: 26px 18px;
+        border-radius: 26px;
+      }
+      .hero-content h1 {
+        font-size: clamp(2.45rem, 11vw, 3.35rem);
+        margin-bottom: 18px;
+      }
+      .hero-content p {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin-bottom: 24px;
+      }
+      .hero-content .contact-buttons {
+        gap: 10px;
+      }
+      .hero-content .contact-buttons a {
+        min-width: 0;
+        width: calc(50% - 5px);
+        min-height: 48px;
+        padding: 10px 12px;
+        font-size: 0.98rem;
+      }
+      .hero-content .contact-buttons a:nth-child(3) {
+        width: 48%;
+      }
+    }
+
+    /* =========================== Стили для ЧАТА =========================== */
+    /* Контейнер всей секции чата */
+    #chat {
+      margin-top: 60px;
+    }
+    /* Основной контейнер чата */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.60);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.10);
+    }
+    /* Зона сообщений */
+    .chat-messages {
+      flex: 1 1 auto;
+      padding: 16px;
+      height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .chat-messages {
+        height: calc(100vh - 260px);
+        max-height: calc(100vh - 260px);
+      }
+    }
+    /* Стиль для каждого сообщения */
+    .message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      line-height: 1.4;
+      word-wrap: break-word;
+      position: relative;
+      animation: fadeIn 0.3s ease forwards;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .message.user {
+      align-self: flex-end;
+      background: rgba(0, 122, 255, 0.95);
+      color: #fff;
+      border-color: rgba(0, 122, 255, 0.35);
+    }
+    .message.assistant {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.70);
+      color: #0b0b0f;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Футер чата: область ввода */
+    .chat-input-area {
+      background: rgba(255, 255, 255, 0.45);
+      padding: 10px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .input-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* Поле ввода */
+    .chat-input {
+      flex: 1;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      outline: none;
+      font-size: 1rem;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.70);
+      resize: none;
+      max-height: 150px;
+      overflow-y: auto;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      color: #0b0b0f;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+    }
+    .chat-input:focus {
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.10);
+    }
+    .send-button {
+      background: rgba(0, 122, 255, 0.95);
+      border: 1px solid rgba(0, 122, 255, 0.30);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      font-size: 1rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+    }
+    .send-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    }
+
+    /* Адаптивность для смартфонов (чат + общая компоновка оплаты) */
+    @media (max-width: 600px) {
+      body {
+        background:
+          radial-gradient(900px 640px at 20% 8%, rgba(77, 163, 255, 0.16), transparent 60%),
+          radial-gradient(760px 560px at 80% 18%, rgba(191, 90, 242, 0.13), transparent 55%),
+          radial-gradient(700px 520px at 50% 90%, rgba(48, 209, 88, 0.10), transparent 58%),
+          linear-gradient(180deg, #050914 0%, #050505 100%);
+        color: #e5e5e5;
+      }
+      section {
+        padding: 42px 16px;
+      }
+      .section-title {
+        font-size: 2.15rem;
+        line-height: 1.1;
+        margin-bottom: 26px;
+      }
+      .skill,
+      .chat-container,
+      footer {
+        background: rgba(8, 14, 28, 0.48) !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        box-shadow: 0 18px 50px rgba(0,0,0,0.30);
+      }
+      .skill {
+        color: rgba(255,255,255,0.86);
+      }
+      .skill h3 {
+        color: rgba(255,255,255,0.96);
+      }
+      .chat-messages {
+        background: rgba(5, 10, 20, 0.28);
+      }
+      .chat-input-area {
+        background: rgba(5, 10, 20, 0.40);
+        border-top-color: rgba(255,255,255,0.10);
+      }
+      .chat-input {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border-color: rgba(255,255,255,0.14);
+      }
+      .chat-input::placeholder {
+        color: rgba(255,255,255,0.55);
+      }
+      footer {
+        margin: 22px 16px 28px;
+        border-radius: 24px;
+        color: rgba(255,255,255,0.72);
+      }
+      .chat-messages {
+        padding: 12px;
+      }
+      .chat-input {
+        font-size: 0.9rem;
+      }
+      .send-button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+      #contact {
+        padding-bottom: 26px;
+      }
+      #payment {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      #payment .contact-buttons,
+      #contact .contact-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      #payment input,
+      #payment a,
+      #contact .contact-buttons a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 16px;
+        white-space: nowrap;
+      }
+      #contact .contact-buttons > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+    }
+
+    /* Автоматическая тёмная тема по настройкам системы */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: radial-gradient(1200px 800px at 20% 10%, rgba(77, 163, 255, 0.18), transparent 60%),
+                    radial-gradient(900px 600px at 80% 30%, rgba(191, 90, 242, 0.14), transparent 55%),
+                    radial-gradient(900px 700px at 40% 90%, rgba(48, 209, 88, 0.12), transparent 60%),
+                    #050505;
+        color: #e5e5e5;
+      }
+      header::after {
+        background:
+          radial-gradient(circle at 18% 28%, rgba(0, 122, 255, 0.22), transparent 24%),
+          radial-gradient(circle at 78% 38%, rgba(175, 82, 222, 0.18), transparent 26%),
+          linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.48));
+      }
+      .section-title {
+        color: #e5e5e5;
+      }
+      .skill {
+        background-color: rgba(12, 18, 32, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+      }
+      .skill:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      }
+      .contact-buttons a,
+      .contact-buttons input {
+        color: #4da3ff;
+        border-color: rgba(77, 163, 255, 0.45);
+        background-color: rgba(77, 163, 255, 0.08);
+      }
+      .contact-buttons a:hover {
+        background-color: #4da3ff;
+        color: #000;
+      }
+
+      .hero-content .contact-buttons a {
+        color: rgba(255,255,255,0.94);
+        background: rgba(255,255,255,0.10);
+        border-color: rgba(255,255,255,0.18);
+      }
+      .hero-content .contact-buttons a:hover {
+        background: rgba(255,255,255,0.18);
+        color: #fff;
+        border-color: rgba(255,255,255,0.30);
+      }
+      .contact-buttons input {
+        background-color: #151515;
+        color: #e5e5e5;
+      }
+      .chat-container {
+        background-color: rgba(12, 18, 32, 0.48);
+        border-color: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+      }
+      .chat-messages {
+        background-color: rgba(16, 16, 16, 0.25);
+      }
+      .message.assistant {
+        background-color: rgba(27, 27, 27, 0.65);
+        color: #e5e5e5;
+        box-shadow: none;
+        border-color: rgba(255, 255, 255, 0.10);
+      }
+      .message.user {
+        background-color: #4da3ff;
+        color: #000;
+      }
+      .chat-input-area {
+        background-color: rgba(16, 16, 16, 0.45);
+        border-top-color: rgba(255, 255, 255, 0.10);
+      }
+      .chat-input {
+        background-color: rgba(24, 24, 24, 0.70);
+        color: #e5e5e5;
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+      .chat-input:focus {
+        background-color: #202020;
+      }
+      .send-button {
+        background-color: #4da3ff;
+        color: #000;
+      }
+      footer {
+        background-color: rgba(12, 18, 32, 0.48);
+        color: rgba(229, 229, 229, 0.70);
+        border-top-color: rgba(255, 255, 255, 0.10);
+      }
+      #lang-toggle {
+        background-color: #4da3ff;
+        color: #000;
+      }
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    /* Иконка политики конфиденциальности в футере */
+    .footer-privacy {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .privacy-icon {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .privacy-icon:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.10);
+    }
+    .privacy-icon svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .privacy-icon {
+        border-color: rgba(255, 255, 255, 0.14);
+        background: rgba(16, 16, 16, 0.55);
+        box-shadow: none;
+      }
+      .privacy-icon:hover {
+        background: rgba(27, 27, 27, 0.65);
+      }
+    }
+
+    /* =========================== Cookie Banner =========================== */
+    .cookie-banner {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 250;
+      display: none;
+    }
+
+    .cookie-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .cookie-text {
+      font-size: 0.92rem;
+      line-height: 1.35;
+      color: rgba(11, 11, 15, 0.85);
+    }
+
+    .cookie-text a {
+      color: #007aff;
+      text-decoration: none;
+    }
+
+    .cookie-ok {
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: rgba(0, 122, 255, 0.95);
+      border: 1px solid rgba(0, 122, 255, 0.30);
+      color: #fff;
+      font-size: 0.95rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .cookie-ok:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    }
+
+    @media (max-width: 520px) {
+      .cookie-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cookie-ok {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cookie-inner {
+        background: rgba(16, 16, 16, 0.72);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: none;
+      }
+      .cookie-text {
+        color: rgba(229, 229, 229, 0.82);
+      }
+      .cookie-text a {
+        color: #4da3ff;
+      }
+      .cookie-ok {
+        background: #4da3ff;
+        color: #000;
+        border-color: rgba(77, 163, 255, 0.35);
+      }
+    }
+  </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <!-- Кнопка переключения языка -->
+  <button id="lang-toggle" data-lang="ru">EN</button>
+
+  <nav class="top-nav" aria-label="Main navigation">
+    <a class="lang-ru" href="#" data-target="about">Обо мне</a>
+    <a class="lang-ru" href="#" data-target="skills">Навыки</a>
+    <a class="lang-ru" href="#" data-target="contact">Полезное</a>
+    <a class="lang-ru" href="#" data-target="chat">Чат</a>
+
+    <a class="lang-en" href="#" data-target="about" style="display:none;">About</a>
+    <a class="lang-en" href="#" data-target="skills" style="display:none;">Skills</a>
+    <a class="lang-en" href="#" data-target="contact" style="display:none;">Useful</a>
+    <a class="lang-en" href="#" data-target="chat" style="display:none;">Chat</a>
+  </nav>
+
+  <!-- Хедер с приветствием -->
+  <header id="home">
+    <div class="hero-lines" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-blue" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-purple" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-green" aria-hidden="true"></div>
+    <div class="hero-content">
+      <!-- Русская версия -->
+      <h1 class="lang-ru">Джо Хакер</h1>
+      <p class="lang-ru">Профессиональный программист. Эксперт в разработке телеграм-ботов, Python, HTML и JavaScript.</p>
+      <div class="contact-buttons lang-ru">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
+      </div>
+      <!-- Английская версия (скрыта по умолчанию) -->
+      <h1 class="lang-en" style="display:none;">Joe Hacker</h1>
+      <p class="lang-en" style="display:none;">Professional programmer. Expert in developing Telegram bots, Python programming, creating scripts, and working with HTML and JavaScript.</p>
+      <div class="contact-buttons lang-en" style="display:none;">
+        <a href="https://t.me/joe_hacker" target="_blank">Telegram</a>
+        <a href="https://kwork.ru/user/joehacker" target="_blank">Kwork</a>
+        <a href="https://github.com/joeruhacker" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Секция "Обо мне" -->
+  <section id="about">
+    <h2 class="section-title lang-ru">Обо мне</h2>
+    <p class="lang-ru" style="text-align: center; max-width: 800px; margin: 0 auto;">
+      Меня зовут Джо Хакер, и я профессионал в области разработки телеграм-ботов, программирования на Python, создания скриптов, а также работы с HTML и JavaScript.
+    </p>
+    <h2 class="section-title lang-en" style="display:none;">About Me</h2>
+    <p class="lang-en" style="display:none; text-align: center; max-width: 800px; margin: 0 auto;">
+      My name is Joe Hacker, and I am a professional developer specializing in creating Telegram bots, programming in Python, writing scripts, and working with HTML and JavaScript.
+    </p>
+  </section>
+
+  <!-- Секция "Навыки и Компетенции" -->
+  <section id="skills">
+    <h2 class="section-title lang-ru">Навыки и Компетенции</h2>
+    <h2 class="section-title lang-en" style="display:none;">Skills and Expertise</h2>
+    <div class="skills">
+      <div class="skill">
+        <h3 class="lang-ru">Разработка Телеграм-ботов</h3>
+        <p class="lang-ru">
+          Опыт создания и внедрения телеграм-ботов для различных целей – от автоматизации и поддержки клиентов до маркетинга и развлечений. Использование API Telegram и библиотек Python, таких как telebot. Интеграция ботов с веб-сервисами и базами данных.
+        </p>
+        <h3 class="lang-en" style="display:none;">Telegram Bot Development</h3>
+        <p class="lang-en" style="display:none;">
+          Experience in creating and implementing Telegram bots for various purposes – from automation and customer support to marketing and entertainment. Utilizing Telegram API and Python libraries such as telebot. Integration of bots with web services and databases.
+        </p>
+      </div>
+      <div class="skill">
+        <h3 class="lang-ru">Программирование на Python</h3>
+        <p class="lang-ru">
+          Глубокие знания языка Python и его применения в веб-разработке, анализе данных и автоматизации. Чистый и эффективный код с использованием принципов ООП. Опыт работы с фреймворками Django и Flask.
+        </p>
+        <h3 class="lang-en" style="display:none;">Python Programming</h3>
+        <p class="lang-en" style="display:none;">
+          In-depth knowledge of Python and its application in web development, data analysis, and automation. Clean and efficient code using OOP principles. Experience with Django and Flask frameworks.
+        </p>
+      </div>
+      <div class="skill">
+        <h3 class="lang-ru">Создание Скриптов</h3>
+        <p class="lang-ru">
+          Разработка скриптов для автоматизации рутинных задач и повышения эффективности рабочих процессов. Опыт работы с системами контроля версий, такими как Git.
+        </p>
+        <h3 class="lang-en" style="display:none;">Script Development</h3>
+        <p class="lang-en" style="display:none;">
+          Development of scripts for automating routine tasks and enhancing workflow efficiency. Experience with version control systems such as Git.
+        </p>
+      </div>
+      <div class="skill">
+        <h3 class="lang-ru">Работа с HTML и JavaScript</h3>
+        <p class="lang-ru">
+          Создание современных и адаптивных веб-страниц с использованием HTML5, CSS3 и JavaScript. Интеграция фронтенда с бэкендом для создания полноценных веб-приложений.
+        </p>
+        <h3 class="lang-en" style="display:none;">HTML & JavaScript Development</h3>
+        <p class="lang-en" style="display:none;">
+          Creating modern and responsive web pages using HTML5, CSS3, and JavaScript. Integrating frontend with backend to develop complete web applications.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция "Контакты" (Quick actions CTA) -->
+  <section id="contact">
+    <h2 class="section-title lang-ru">Полезное</h2>
+    <h2 class="section-title lang-en" style="display:none;">Useful</h2>
+
+    <p class="lang-ru" style="text-align: center; max-width: 800px; margin: 0 auto; opacity: 0.85;">
+      Используйте бота для подготовки технического задания и промптов, напишите мне на email, либо оплатите услуги через крипто-бот.
+    </p>
+    <p class="lang-en" style="display:none; text-align: center; max-width: 800px; margin: 0 auto; opacity: 0.85;">
+      Use the bot to prepare a clear project brief and prompts, email me directly, or pay for services via the crypto bot.
+    </p>
+
+    <div class="contact-buttons">
+      <div class="lang-ru">
+        <a href="https://t.me/JoeHacker_bot" target="_blank" rel="noopener noreferrer">Telegram bot</a>
+        <a href="mailto:joerutorhacker@gmail.com?subject=Запрос%20с%20сайта%20joehacker.tech&body=Здравствуйте!%0A%0AЯ%20хочу%20обсудить%20задачу:%0A%0A1)%20Описание%20проекта:%0A2)%20Сроки:%0A3)%20Бюджет:%0A%0AКонтакты%20для%20связи:%0A">Email me</a>
+        <a href="https://t.me/send?start=IVCNjkrrIYwZ" target="_blank" rel="noopener noreferrer">Crypto bot</a>
+      </div>
+      <div class="lang-en" style="display:none;">
+        <a href="https://t.me/JoeHacker_bot" target="_blank" rel="noopener noreferrer">Telegram bot</a>
+        <a href="mailto:joerutorhacker@gmail.com?subject=Request%20from%20joehacker.tech&body=Hello!%0A%0AI'd%20like%20to%20discuss%20a%20task:%0A%0A1)%20Project%20description:%0A2)%20Timeline:%0A3)%20Budget:%0A%0AContact%20details:%0A">Email me</a>
+        <a href="https://t.me/send?start=IVCNjkrrIYwZ" target="_blank" rel="noopener noreferrer">Crypto bot</a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Секция ЧАТА -->
+  <section id="chat">
+    <h2 class="section-title lang-ru">Задать вопрос</h2>
+    <h2 class="section-title lang-en" style="display:none;">Ask a question</h2>
+    <div class="chat-container">
+      <!-- Зона сообщений -->
+      <div id="chatMessages" class="chat-messages">
+        <!-- Сообщения добавляются через JS -->
+      </div>
+      <!-- Turnstile (anti-bot) -->
+      <div style="display:flex;justify-content:center;padding:10px;">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACZJOs_aFyuwK735"></div>
+      </div>
+      <!-- Футер чата: поле ввода и кнопка -->
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            class="chat-input"
+            rows="1"
+            placeholder="Спросите у бота..."
+            onkeydown="handleKeyDown(event)"
+          ></textarea>
+          <button class="send-button" onclick="sendMessage()">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="lang-ru">&copy; 2026 Джо Хакер. Все права защищены.</p>
+    <p class="lang-en" style="display:none;">&copy; 2026 Joe Hacker. All rights reserved.</p>
+
+    <!-- Политика конфиденциальности (иконка-ссылка) -->
+    <div class="footer-privacy">
+      <a class="privacy-icon lang-ru" href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer" aria-label="Политика конфиденциальности" title="Политика конфиденциальности" style="display:inline-flex;">
+        <!-- маленькое лого-иконка (щит) -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L20 6V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.8" />
+          <path d="M9 12.5L11 14.5L15.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+
+      <a class="privacy-icon lang-en" href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer" aria-label="Privacy Policy" title="Privacy Policy" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2L20 6V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6L12 2Z" stroke="currentColor" stroke-width="1.8" />
+          <path d="M9 12.5L11 14.5L15.5 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Cookie banner (essential cookies only) -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <div class="lang-ru">
+          Этот сайт использует cookies только для базовой функциональности и безопасности.
+          Продолжая использование сайта, вы соглашаетесь с
+          <a href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer">Политикой конфиденциальности</a>.
+        </div>
+        <div class="lang-en" style="display:none;">
+          This website uses cookies only for essential functionality and security.
+          By continuing to use the site, you agree to the
+          <a href="https://joeruhacker.github.io/Privacyjoe/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        </div>
+      </div>
+      <button id="cookie-ok" class="cookie-ok" type="button">OK</button>
+    </div>
+  </div>
+
+
+
+  <!-- Скрипты: переключение языка -->
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    function resetToHomeOnRefresh() {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+
+    window.addEventListener('DOMContentLoaded', resetToHomeOnRefresh);
+    window.addEventListener('load', resetToHomeOnRefresh);
+    window.addEventListener('pageshow', resetToHomeOnRefresh);
+
+    document.querySelectorAll('.top-nav a[data-target]').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        const target = document.getElementById(link.dataset.target);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      });
+    });
+
+    // Переключение языков
+    function toggleLanguage() {
+      const ruElements = document.querySelectorAll('.lang-ru');
+      const enElements = document.querySelectorAll('.lang-en');
+      const toggleBtn = document.getElementById('lang-toggle');
+      const chatInput = document.getElementById('userInput');
+      const sendButton = document.querySelector('.send-button');
+
+      if (toggleBtn.dataset.lang === 'ru') {
+        ruElements.forEach(el => el.style.display = 'none');
+        enElements.forEach(el => el.style.display = '');
+        toggleBtn.textContent = 'RU';
+        toggleBtn.dataset.lang = 'en';
+        chatInput.placeholder = "Ask the bot...";
+        sendButton.textContent = "Send";
+      } else {
+        ruElements.forEach(el => el.style.display = '');
+        enElements.forEach(el => el.style.display = 'none');
+        toggleBtn.textContent = 'EN';
+        toggleBtn.dataset.lang = 'ru';
+        chatInput.placeholder = "Спросите у бота...";
+        sendButton.textContent = "Отправить";
+      }
+      syncCookieBannerLanguage();
+    }
+    document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+
+    // =========================== Cookie banner logic ===========================
+    const COOKIE_BANNER_KEY = 'cookiesAccepted';
+
+    function showCookieBannerIfNeeded() {
+      const banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+
+      try {
+        const accepted = localStorage.getItem(COOKIE_BANNER_KEY) === 'true';
+        banner.style.display = accepted ? 'none' : 'block';
+      } catch (e) {
+        // If storage is blocked, show the banner
+        banner.style.display = 'block';
+      }
+    }
+
+    function syncCookieBannerLanguage() {
+      const banner = document.getElementById('cookie-banner');
+      const toggleBtn = document.getElementById('lang-toggle');
+      if (!banner || !toggleBtn) return;
+
+      const isRu = toggleBtn.dataset.lang === 'ru';
+      const ruBlocks = banner.querySelectorAll('.lang-ru');
+      const enBlocks = banner.querySelectorAll('.lang-en');
+
+      ruBlocks.forEach(el => el.style.display = isRu ? 'block' : 'none');
+      enBlocks.forEach(el => el.style.display = isRu ? 'none' : 'block');
+    }
+
+    function acceptCookies() {
+      const banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+
+      try {
+        localStorage.setItem(COOKIE_BANNER_KEY, 'true');
+      } catch (e) {
+        // ignore
+      }
+      banner.style.display = 'none';
+    }
+
+    // Wire up cookie OK button + init
+    const cookieOkBtn = document.getElementById('cookie-ok');
+    if (cookieOkBtn) {
+      cookieOkBtn.addEventListener('click', acceptCookies);
+    }
+
+    showCookieBannerIfNeeded();
+    syncCookieBannerLanguage();
+  </script>
+
+  <!-- Скрипт работы чата -->
+  <script>
+    // URL бекэнда
+    const BACKEND_URL = "https://n8n.joehacker.tech/webhook/ask";
+    const chatMessages = document.getElementById("chatMessages");
+    const userInput = document.getElementById("userInput");
+
+    // Функция конвертации ссылок в кликабельные элементы
+    function convertLinks(text) {
+      const urlRegex = /(https?:\/\/[^\s]+?)([.,!?;:)\]]*(?=\s|$))/g;
+      return text.replace(urlRegex, (match, url, trailing) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+      });
+    }
+
+    // Функция добавления сообщения в чат
+    function appendMessage(text, sender) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", sender);
+      messageDiv.innerHTML = convertLinks(text);
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Отправка сообщения
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) {
+        alert("Введите сообщение!");
+        return;
+      }
+      appendMessage(message, "user");
+      userInput.value = "";
+      adjustTextareaHeight();
+
+      const loadingMessage = document.createElement("div");
+      loadingMessage.classList.add("message", "assistant");
+      loadingMessage.innerText = "Загрузка...";
+      chatMessages.appendChild(loadingMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Get Turnstile token (generated after the user passes the challenge)
+      const tokenEl = document.querySelector('input[name="cf-turnstile-response"]');
+      const token = tokenEl ? tokenEl.value : "";
+
+      if (!token) {
+        loadingMessage.remove();
+        appendMessage("Verify you are human", "assistant");
+        return;
+      }
+
+      fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message, token: token })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Ошибка при запросе к серверу");
+        }
+        return response.json();
+      })
+      .then(data => {
+        loadingMessage.remove();
+        let replyText = "";
+        if (Array.isArray(data) && data.length > 0 && data[0].output) {
+          replyText = data[0].output;
+        } else if (data.reply) {
+          replyText = data.reply;
+        } else if (data.error) {
+          replyText = "Ошибка: " + data.error;
+        } else {
+          replyText = "Неизвестный ответ от сервера.";
+        }
+        appendMessage(replyText, "assistant");
+        // Reset Turnstile for the next request
+        if (window.turnstile) {
+          try { window.turnstile.reset(); } catch (e) {}
+        }
+      })
+      .catch(error => {
+        loadingMessage.remove();
+        appendMessage("Не удалось отправить запрос: " + error.message, "assistant");
+        if (window.turnstile) {
+          try { window.turnstile.reset(); } catch (e) {}
+        }
+      });
+    }
+
+    // Отправка по нажатию Enter (если не зажат Shift)
+    function handleKeyDown(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+      adjustTextareaHeight();
+    }
+
+    // Автоподгонка высоты textarea
+    function adjustTextareaHeight() {
+      userInput.style.height = "auto";
+      userInput.style.height = userInput.scrollHeight + "px";
+    }
+  </script>
+</body>
+</html>
