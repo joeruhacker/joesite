@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Host: joehacker.tech
+
+Sitemap: https://joehacker.tech/sitemap.xml
