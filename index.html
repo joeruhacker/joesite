@@ -97,6 +97,73 @@
       z-index: 1;
       pointer-events: none;
     }
+    .hero-bg-orb {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(38px);
+      opacity: 0.48;
+      z-index: 1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: heroOrbMove 12s ease-in-out infinite alternate;
+    }
+
+    .hero-bg-orb.orb-blue {
+      left: 8%;
+      top: 18%;
+      background: rgba(0, 122, 255, 0.72);
+    }
+
+    .hero-bg-orb.orb-purple {
+      right: 7%;
+      top: 22%;
+      background: rgba(175, 82, 222, 0.62);
+      animation-delay: 1.8s;
+      animation-duration: 15s;
+    }
+
+    .hero-bg-orb.orb-green {
+      left: 38%;
+      bottom: 8%;
+      background: rgba(52, 199, 89, 0.45);
+      animation-delay: 3s;
+      animation-duration: 18s;
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: -50%;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 48%, transparent 52%),
+        linear-gradient(65deg, transparent 0%, rgba(0,122,255,0.10) 48%, transparent 52%);
+      background-size: 360px 360px, 420px 420px;
+      animation: heroLinesMove 18s linear infinite;
+      opacity: 0.42;
+    }
+
+    @keyframes heroOrbMove {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(70px, -45px, 0) scale(1.12); }
+      100% { transform: translate3d(-45px, 60px, 0) scale(0.94); }
+    }
+
+    @keyframes heroLinesMove {
+      from { transform: translate3d(0, 0, 0) rotate(0deg); }
+      to { transform: translate3d(160px, 120px, 0) rotate(1deg); }
+    }
+
+    @media (max-width: 600px) {
+      .hero-bg-orb {
+        width: 220px;
+        height: 220px;
+        filter: blur(30px);
+      }
+    }
+
     .hero-content::before,
     .hero-content::after {
       content: '';
@@ -124,8 +191,9 @@
     }
 
     @keyframes premiumGradient {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 40%; }
+      100% { background-position: 30% 100%; }
     }
 
     @keyframes floatBlob {
@@ -639,6 +707,10 @@
 
   <!-- Хедер с приветствием -->
   <header id="home">
+    <div class="hero-lines" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-blue" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-purple" aria-hidden="true"></div>
+    <div class="hero-bg-orb orb-green" aria-hidden="true"></div>
     <div class="hero-content">
       <!-- Русская версия -->
       <h1 class="lang-ru">Джо Хакер</h1>
@@ -1007,4 +1079,3 @@
   </script>
 </body>
 </html>
-
