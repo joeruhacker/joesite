@@ -220,31 +220,6 @@
       }
     }
 
-    .hero-content::before,
-    .hero-content::after {
-      content: '';
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      filter: blur(26px);
-      opacity: 0.42;
-      z-index: -1;
-      animation: floatBlob 8s ease-in-out infinite alternate;
-    }
-
-    .hero-content::before {
-      top: -70px;
-      left: -90px;
-      background: rgba(0, 122, 255, 0.75);
-    }
-
-    .hero-content::after {
-      right: -90px;
-      bottom: -80px;
-      background: rgba(175, 82, 222, 0.65);
-      animation-delay: 1.5s;
-    }
 
     @keyframes premiumGradient {
       0% { background-position: 0% 50%; }
@@ -252,10 +227,6 @@
       100% { background-position: 30% 100%; }
     }
 
-    @keyframes floatBlob {
-      from { transform: translate3d(0, 0, 0) scale(1); }
-      to { transform: translate3d(18px, -14px, 0) scale(1.08); }
-    }
     .hero-content {
       position: relative;
       text-align: center;
@@ -807,13 +778,13 @@
   <button id="lang-toggle" data-lang="ru">EN</button>
 
   <nav class="top-nav" aria-label="Main navigation">
-    <a class="lang-ru" href="#about">Обо мне</a>
-    <a class="lang-ru" href="#skills">Навыки</a>
-    <a class="lang-ru" href="#contact">Полезное</a>
+    <a class="lang-ru" href="#" data-target="about">Обо мне</a>
+    <a class="lang-ru" href="#" data-target="skills">Навыки</a>
+    <a class="lang-ru" href="#" data-target="contact">Полезное</a>
 
-    <a class="lang-en" href="#about" style="display:none;">About</a>
-    <a class="lang-en" href="#skills" style="display:none;">Skills</a>
-    <a class="lang-en" href="#contact" style="display:none;">Useful</a>
+    <a class="lang-en" href="#" data-target="about" style="display:none;">About</a>
+    <a class="lang-en" href="#" data-target="skills" style="display:none;">Skills</a>
+    <a class="lang-en" href="#" data-target="contact" style="display:none;">Useful</a>
   </nav>
 
   <!-- Хедер с приветствием -->
@@ -1006,6 +977,31 @@
 
   <!-- Скрипты: переключение языка -->
   <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    function resetToHomeOnRefresh() {
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+
+    window.addEventListener('DOMContentLoaded', resetToHomeOnRefresh);
+    window.addEventListener('load', resetToHomeOnRefresh);
+    window.addEventListener('pageshow', resetToHomeOnRefresh);
+
+    document.querySelectorAll('.top-nav a[data-target]').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        const target = document.getElementById(link.dataset.target);
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      });
+    });
+
     // Переключение языков
     function toggleLanguage() {
       const ruElements = document.querySelectorAll('.lang-ru');
