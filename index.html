@@ -85,22 +85,22 @@
     @media (max-width: 720px) {
       .top-nav {
         top: calc(env(safe-area-inset-top) + 12px);
-        left: 14px;
-        right: 78px;
+        left: 10px;
+        right: 66px;
         transform: none;
-        overflow-x: visible;
+        overflow-x: hidden;
         justify-content: space-between;
-        gap: 4px;
-        padding: 6px;
+        gap: 2px;
+        padding: 5px;
+        background: rgba(5, 12, 24, 0.36);
+        border-color: rgba(255,255,255,0.16);
       }
       .top-nav a {
         min-height: 34px;
-        padding: 0 9px;
-        font-size: 0.82rem;
-        flex: 1 1 auto;
-      }
-      .top-nav .hide-mobile {
-        display: none !important;
+        padding: 0 5px;
+        font-size: 0.74rem;
+        letter-spacing: -0.02em;
+        flex: 1 1 0;
       }
     }
     /* Кнопка переключения языка */
@@ -122,11 +122,11 @@
     @media (max-width: 720px) {
       #lang-toggle {
         top: calc(env(safe-area-inset-top) + 12px);
-        right: 14px;
-        min-width: 54px;
-        min-height: 46px;
-        padding: 8px 12px;
-        font-size: 0.95rem;
+        right: 10px;
+        min-width: 50px;
+        min-height: 44px;
+        padding: 8px 10px;
+        font-size: 0.9rem;
       }
     }
     /* Секция хедера */
@@ -531,9 +531,10 @@
     @media (max-width: 600px) {
       body {
         background:
-          radial-gradient(900px 640px at 20% 8%, rgba(77, 163, 255, 0.18), transparent 60%),
-          radial-gradient(760px 560px at 80% 18%, rgba(191, 90, 242, 0.14), transparent 55%),
-          #050505;
+          radial-gradient(900px 640px at 20% 8%, rgba(77, 163, 255, 0.16), transparent 60%),
+          radial-gradient(760px 560px at 80% 18%, rgba(191, 90, 242, 0.13), transparent 55%),
+          radial-gradient(700px 520px at 50% 90%, rgba(48, 209, 88, 0.10), transparent 58%),
+          linear-gradient(180deg, #050914 0%, #050505 100%);
         color: #e5e5e5;
       }
       section {
@@ -543,6 +544,41 @@
         font-size: 2.15rem;
         line-height: 1.1;
         margin-bottom: 26px;
+      }
+      .skill,
+      .chat-container,
+      footer {
+        background: rgba(8, 14, 28, 0.48) !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
+        box-shadow: 0 18px 50px rgba(0,0,0,0.30);
+      }
+      .skill {
+        color: rgba(255,255,255,0.86);
+      }
+      .skill h3 {
+        color: rgba(255,255,255,0.96);
+      }
+      .chat-messages {
+        background: rgba(5, 10, 20, 0.28);
+      }
+      .chat-input-area {
+        background: rgba(5, 10, 20, 0.40);
+        border-top-color: rgba(255,255,255,0.10);
+      }
+      .chat-input {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border-color: rgba(255,255,255,0.14);
+      }
+      .chat-input::placeholder {
+        color: rgba(255,255,255,0.55);
+      }
+      footer {
+        margin: 22px 16px 28px;
+        border-radius: 24px;
+        color: rgba(255,255,255,0.72);
       }
       .chat-messages {
         padding: 12px;
@@ -602,10 +638,10 @@
         color: #e5e5e5;
       }
       .skill {
-        background-color: rgba(20, 20, 20, 0.55);
-        border: 1px solid rgba(255, 255, 255, 0.10);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        background-color: rgba(12, 18, 32, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
         box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
       }
       .skill:hover {
@@ -637,10 +673,10 @@
         color: #e5e5e5;
       }
       .chat-container {
-        background-color: rgba(16, 16, 16, 0.55);
+        background-color: rgba(12, 18, 32, 0.48);
         border-color: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(18px) saturate(140%);
+        -webkit-backdrop-filter: blur(18px) saturate(140%);
       }
       .chat-messages {
         background-color: rgba(16, 16, 16, 0.25);
@@ -672,7 +708,7 @@
         color: #000;
       }
       footer {
-        background-color: rgba(16, 16, 16, 0.55);
+        background-color: rgba(12, 18, 32, 0.48);
         color: rgba(229, 229, 229, 0.70);
         border-top-color: rgba(255, 255, 255, 0.10);
       }
@@ -823,12 +859,12 @@
   <nav class="top-nav" aria-label="Main navigation">
     <a class="lang-ru" href="#" data-target="about">Обо мне</a>
     <a class="lang-ru" href="#" data-target="skills">Навыки</a>
-    <a class="lang-ru hide-mobile" href="#" data-target="contact">Полезное</a>
+    <a class="lang-ru" href="#" data-target="contact">Полезное</a>
     <a class="lang-ru" href="#" data-target="chat">Чат</a>
 
     <a class="lang-en" href="#" data-target="about" style="display:none;">About</a>
     <a class="lang-en" href="#" data-target="skills" style="display:none;">Skills</a>
-    <a class="lang-en hide-mobile" href="#" data-target="contact" style="display:none;">Useful</a>
+    <a class="lang-en" href="#" data-target="contact" style="display:none;">Useful</a>
     <a class="lang-en" href="#" data-target="chat" style="display:none;">Chat</a>
   </nav>
 
@@ -1057,13 +1093,13 @@
 
       if (toggleBtn.dataset.lang === 'ru') {
         ruElements.forEach(el => el.style.display = 'none');
-        enElements.forEach(el => el.style.display = 'block');
+        enElements.forEach(el => el.style.display = '');
         toggleBtn.textContent = 'RU';
         toggleBtn.dataset.lang = 'en';
         chatInput.placeholder = "Ask the bot...";
         sendButton.textContent = "Send";
       } else {
-        ruElements.forEach(el => el.style.display = 'block');
+        ruElements.forEach(el => el.style.display = '');
         enElements.forEach(el => el.style.display = 'none');
         toggleBtn.textContent = 'EN';
         toggleBtn.dataset.lang = 'ru';
