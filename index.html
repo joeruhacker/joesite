@@ -39,9 +39,67 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
     }
     a {
       text-decoration: none;
+    }
+    .top-nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(5, 12, 24, 0.46);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+    }
+
+    .top-nav a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.86);
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    }
+
+    .top-nav a:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .top-nav {
+        top: 14px;
+        left: 12px;
+        right: 72px;
+        transform: none;
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+      }
+      .top-nav::-webkit-scrollbar {
+        display: none;
+      }
+      .top-nav a {
+        min-height: 34px;
+        padding: 0 12px;
+        font-size: 0.86rem;
+      }
     }
     /* Кнопка переключения языка */
     #lang-toggle {
@@ -54,7 +112,7 @@
       border-radius: 30px;
       padding: 10px 15px;
       cursor: pointer;
-      z-index: 100;
+      z-index: 130;
       font-size: 1rem;
     }
     /* Секция хедера */
@@ -747,6 +805,16 @@
 <body>
   <!-- Кнопка переключения языка -->
   <button id="lang-toggle" data-lang="ru">EN</button>
+
+  <nav class="top-nav" aria-label="Main navigation">
+    <a class="lang-ru" href="#about">Обо мне</a>
+    <a class="lang-ru" href="#skills">Навыки</a>
+    <a class="lang-ru" href="#contact">Полезное</a>
+
+    <a class="lang-en" href="#about" style="display:none;">About</a>
+    <a class="lang-en" href="#skills" style="display:none;">Skills</a>
+    <a class="lang-en" href="#contact" style="display:none;">Useful</a>
+  </nav>
 
   <!-- Хедер с приветствием -->
   <header id="home">
